@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      (function(){
+        const t = localStorage.getItem('theme')
+        if(t !== 'light') document.documentElement.classList.add('dark')
+        else document.documentElement.classList.add('light')
+      })()
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#06b6d4" />
+
+    <title>Housein Monzer — Full-Stack Web Developer</title>
+    <meta name="description" content="Full-stack web developer building React + TypeScript applications. Computer Science graduate based in Beirut, currently shipping SouQna — a multi-vendor marketplace for Lebanon." />
+    <meta name="author" content="Housein Monzer" />
+    <link rel="canonical" href="https://houseinmonzer.netlify.app/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://houseinmonzer.netlify.app/" />
+    <meta property="og:title" content="Housein Monzer — Full-Stack Web Developer" />
+    <meta property="og:description" content="React + TypeScript developer building SouQna, a multi-vendor Lebanese marketplace. Portfolio, projects, and contact." />
+    <meta property="og:image" content="https://houseinmonzer.netlify.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Housein Monzer — Full-Stack Web Developer" />
+    <meta property="og:site_name" content="Housein Monzer" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Housein Monzer — Full-Stack Web Developer" />
+    <meta name="twitter:description" content="React + TypeScript developer building SouQna, a multi-vendor Lebanese marketplace." />
+    <meta name="twitter:image" content="https://houseinmonzer.netlify.app/og-image.png" />
+
+    <!-- JSON-LD: Person schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Housein Monzer",
+        "url": "https://houseinmonzer.netlify.app/",
+        "jobTitle": "Full-Stack Web Developer",
+        "email": "mailto:houseinmonzer@proton.me",
+        "telephone": "+961-81-960-352",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Beirut",
+          "addressCountry": "Lebanon"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Lebanese University – Faculty of Science (Hadat)"
+        },
+        "sameAs": [
+          "https://github.com/HouseinMonzer",
+          "https://www.linkedin.com/in/housein-monzer"
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Static form for Netlify Forms detection. Netlify's build bot reads this at deploy time to register the "contact" form. The actual submission happens from the React component via fetch. -->
+    <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+    </form>
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
