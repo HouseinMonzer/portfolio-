@@ -9,7 +9,7 @@ export default function Footer() {
         <p className="text-slate-500 text-sm">
           © {year}{' '}
           <span className="gradient-text font-semibold">{personal.name}</span>
-          <span className="hidden sm:inline"> · Built with React + Vite</span>
+
         </p>
         <div className="flex items-center gap-2">
           <a
