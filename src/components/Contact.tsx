@@ -17,15 +17,14 @@ const WA_APIKEY  = import.meta.env.VITE_CALLMEBOT_KEY ?? ''
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
-const encode = (data: Record<string, string>) =>
-  Object.keys(data)
-    .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`)
-    .join('&')
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function Contact() {
   const { ref, inView } = useInView()
   const [status, setStatus] = useState<Status>('idle')
   const [form, setForm] = useState({ name: '', email: '', message: '' })
+  // Honeypot: real users never fill this hidden field; bots do.
+  const [botField, setBotField] = useState('')
 
   const notifyWhatsApp = (name: string, email: string, msg: string) => {
     if (!WA_APIKEY) return
@@ -40,12 +39,31 @@ export default function Contact() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
+
+    // Honeypot tripped → silently pretend success, send nothing.
+    if (botField) {
+      setStatus('success')
+      setForm({ name: '', email: '', message: '' })
+      setTimeout(() => setStatus('idle'), 5000)
+      return
+    }
+
+    // Client-side validation before hitting EmailJS.
+    const name = form.name.trim()
+    const email = form.email.trim()
+    const message = form.message.trim()
+    if (name.length < 2 || !EMAIL_RE.test(email) || message.length < 10) {
+      setStatus('error')
+      setTimeout(() => setStatus('idle'), 4000)
+      return
+    }
+
     setStatus('loading')
     try {
       const params = {
-        from_name:  form.name,
-        from_email: form.email,
-        message:    form.message,
+        from_name:  name,
+        from_email: email,
+        message,
         to_name:    'Housein',
       }
 
@@ -56,20 +74,7 @@ export default function Contact() {
       emailjs.send(EJS_SERVICE, 'template_rucx4ys', params, EJS_KEY)
         .catch((err) => console.warn('Thank-you email failed:', err))
 
-      // Mirror submission to Netlify Forms so it shows up in the Netlify dashboard.
-      // Non-blocking: if Netlify is unreachable, the EmailJS path still succeeded.
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encode({
-          'form-name': 'contact',
-          name: form.name,
-          email: form.email,
-          message: form.message,
-        }),
-      }).catch((err) => console.warn('Netlify Forms submission failed:', err))
-
-      notifyWhatsApp(form.name, form.email, form.message)
+      notifyWhatsApp(name, email, message)
       setStatus('success')
       setForm({ name: '', email: '', message: '' })
       setTimeout(() => setStatus('idle'), 5000)
@@ -130,18 +135,18 @@ export default function Contact() {
           </div>
 
           {/* ── Form ── */}
-          <form
-            onSubmit={handleSubmit}
-            name="contact"
-            method="POST"
-            data-netlify="true"
-            data-netlify-honeypot="bot-field"
-            className="space-y-4"
-          >
-            <input type="hidden" name="form-name" value="contact" />
-            <p hidden>
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            {/* Honeypot — hidden from users, catches bots */}
+            <p className="hidden" aria-hidden="true">
               <label>
-                Don&apos;t fill this out: <input name="bot-field" />
+                Don&apos;t fill this out:{' '}
+                <input
+                  name="bot-field"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={botField}
+                  onChange={(e) => setBotField(e.target.value)}
+                />
               </label>
             </p>
 

@@ -1,0 +1,17 @@
+{
+  "name": "Housein Monzer — Full-Stack Web Developer",
+  "short_name": "Housein Monzer",
+  "description": "Portfolio of Housein Monzer, full-stack web developer building React + TypeScript applications.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0f1e",
+  "theme_color": "#06b6d4",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
