@@ -1,7 +1,7 @@
 export const personal = {
   name: 'Housein Monzer',
   title: 'Full-Stack Web Developer',
-  roles: ['Full-Stack Developer', 'React + TypeScript', 'WordPress Expert', 'IT Support Specialist'],
+  roles: ['Full-Stack Developer', 'React + TypeScript Engineer', 'WordPress Developer'],
   location: 'Beirut, Lebanon',
   email: 'houseinmonzer@proton.me',
   phone: '+961 81 960 352',
@@ -80,10 +80,22 @@ export const projects: Project[] = [
       'Full-stack marketplace where local vendors run their own shops, list products, and manage orders. Vendor dashboard with full CRUD, product/shop/cart pages, and custom JWT auth handled through a Zustand store. Built end-to-end on a modern TypeScript stack with Prisma + Neon Postgres on the backend.',
     tags: ['React', 'TypeScript', 'Vite', 'TailwindCSS', 'Zustand', 'Node.js', 'Prisma', 'Neon Postgres', 'JWT'],
     image: '/souqna-preview.png',
-    live: null,
+    live: 'https://souqna-smoky.vercel.app/',
     code: null,
     featured: true,
-    status: 'Coming Soon',
+    status: 'In Development',
+  },
+  {
+    name: 'Ali The Insurer',
+    tagline: 'Trilingual insurance consultant site',
+    description:
+      'Marketing website for a licensed Lebanese insurance & financial consultant. Trilingual (English / Arabic / French) with RTL support, a clear Services + FAQ + testimonials layout, and conversion-focused CTAs (Get a Quote, WhatsApp, Instagram). Built as a fast single-page site and deployed on Vercel.',
+    tags: ['React', 'Vite', 'TailwindCSS', 'Responsive', 'Multilingual (EN / AR / FR)'],
+    image: '/ali.webp',
+    live: 'https://alitheinsurer.com/',
+    code: null,
+    featured: true,
+    status: 'Live',
   },
   {
     name: 'Synctale Client Sites',

@@ -5,7 +5,7 @@ import { useInView } from '../hooks/useInView'
 
 export default function Projects() {
   const { ref, inView } = useInView()
-  const featured = projects.find((p) => p.featured)
+  const featured = projects.filter((p) => p.featured)
   const rest = projects.filter((p) => !p.featured)
 
   return (
@@ -19,8 +19,8 @@ export default function Projects() {
         </h2>
         <div className="w-16 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full mb-10" />
 
-        {featured && (
-          <article className="card-glow rounded-2xl overflow-hidden mb-10 grid lg:grid-cols-2">
+        {featured.map((featured) => (
+          <article key={featured.name} className="card-glow rounded-2xl overflow-hidden mb-6 grid lg:grid-cols-2">
             <div className="relative aspect-[16/10] lg:aspect-auto bg-navy-900 overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-700/50">
               <img
                 src={featured.image}
@@ -83,9 +83,9 @@ export default function Projects() {
               </div>
             </div>
           </article>
-        )}
+        ))}
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
           {rest.map((project, idx) => (
             <article
               key={project.name}

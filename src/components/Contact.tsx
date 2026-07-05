@@ -193,19 +193,21 @@ export default function Contact() {
               />
             </div>
 
-            {/* Status message */}
-            {status === 'success' && (
-              <div className="flex items-center gap-2 text-green-400 text-sm bg-green-500/10 border border-green-500/30 rounded-lg px-4 py-2.5">
-                <CheckCircle size={16} />
-                Message sent! I'll get back to you soon.
-              </div>
-            )}
-            {status === 'error' && (
-              <div className="flex items-center gap-2 text-red-400 text-sm bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-2.5">
-                <AlertCircle size={16} />
-                Failed to send. Please try again or email me directly.
-              </div>
-            )}
+            {/* Status message — announced to screen readers */}
+            <div role="status" aria-live="polite">
+              {status === 'success' && (
+                <div className="flex items-center gap-2 text-green-400 text-sm bg-green-500/10 border border-green-500/30 rounded-lg px-4 py-2.5">
+                  <CheckCircle size={16} />
+                  Message sent! I'll get back to you soon.
+                </div>
+              )}
+              {status === 'error' && (
+                <div className="flex items-center gap-2 text-red-400 text-sm bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-2.5">
+                  <AlertCircle size={16} />
+                  Please check your name, a valid email, and a message (10+ chars) — then try again.
+                </div>
+              )}
+            </div>
 
             <button
               type="submit"

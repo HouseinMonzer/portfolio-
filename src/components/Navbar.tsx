@@ -7,11 +7,30 @@ const links = ['About', 'Skills', 'Experience', 'Projects', 'Education', 'Contac
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [active, setActive] = useState('hero')
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Scroll-spy: highlight the nav link for the section currently in view.
+  useEffect(() => {
+    const ids = ['hero', ...links.map((l) => l.toLowerCase())]
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id)
+        })
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    )
+    ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null)
+      .forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
   }, [])
 
   const scrollTo = (id: string) => {
@@ -32,16 +51,25 @@ export default function Navbar() {
         </button>
 
         <ul className="hidden md:flex items-center gap-8">
-          {links.map((link) => (
-            <li key={link}>
-              <button
-                onClick={() => scrollTo(link)}
-                className="text-slate-400 hover:text-cyan-400 transition-colors text-sm font-medium tracking-wide"
-              >
-                {link}
-              </button>
-            </li>
-          ))}
+          {links.map((link) => {
+            const isActive = active === link.toLowerCase()
+            return (
+              <li key={link}>
+                <button
+                  onClick={() => scrollTo(link)}
+                  aria-current={isActive ? 'true' : undefined}
+                  className={`relative text-sm font-medium tracking-wide transition-colors ${
+                    isActive ? 'text-cyan-400' : 'text-slate-400 hover:text-cyan-400'
+                  }`}
+                >
+                  {link}
+                  {isActive && (
+                    <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-cyan-400 rounded-full" />
+                  )}
+                </button>
+              </li>
+            )
+          })}
         </ul>
 
         <div className="hidden md:flex items-center gap-2">
@@ -81,7 +109,12 @@ export default function Navbar() {
               <li key={link}>
                 <button
                   onClick={() => scrollTo(link)}
-                  className="text-slate-300 hover:text-cyan-400 transition-colors w-full text-left py-1"
+                  aria-current={active === link.toLowerCase() ? 'true' : undefined}
+                  className={`w-full text-left py-1 transition-colors ${
+                    active === link.toLowerCase()
+                      ? 'text-cyan-400 font-medium'
+                      : 'text-slate-300 hover:text-cyan-400'
+                  }`}
                 >
                   {link}
                 </button>
