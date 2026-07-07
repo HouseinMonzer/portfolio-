@@ -79,7 +79,7 @@ export const projects: Project[] = [
     description:
       'Full-stack marketplace where local vendors run their own shops, list products, and manage orders. Vendor dashboard with full CRUD, product/shop/cart pages, and custom JWT auth handled through a Zustand store. Built end-to-end on a modern TypeScript stack with Prisma + Neon Postgres on the backend.',
     tags: ['React', 'TypeScript', 'Vite', 'TailwindCSS', 'Zustand', 'Node.js', 'Prisma', 'Neon Postgres', 'JWT'],
-    image: '/souqna-preview.png',
+    image: '/souqna-preview.webp',
     live: 'https://souqna-smoky.vercel.app/',
     code: null,
     featured: true,
@@ -97,33 +97,18 @@ export const projects: Project[] = [
     featured: true,
     status: 'Live',
   },
-  {
-    name: 'Synctale Client Sites',
-    tagline: 'WordPress development at scale',
-    description:
-      'Designed, built, and maintained responsive WordPress sites for Synctale clients over two years. Theme customization, plugin integration, on-page SEO, and load-time optimization across the portfolio.',
-    tags: ['WordPress', 'PHP', 'SEO', 'CSS'],
-    live: null,
-    code: null,
-  },
-  {
-    name: 'Restaurant Reservation System',
-    tagline: 'PHP + MySQL full-stack site',
-    description:
-      'Restaurant website with menu management, a reservation flow, and mobile-first responsive design. Backed by a MySQL schema and a custom PHP admin panel.',
-    tags: ['PHP', 'MySQL', 'HTML', 'CSS'],
-    live: null,
-    code: null,
-  },
-  {
-    name: 'Networking Lab Configurations',
-    tagline: 'Hands-on routing, VLANs, DHCP/DNS',
-    description:
-      'Designed and simulated virtual networks in GNS3 and Packet Tracer covering TCP/IP, DHCP, DNS, VLANs, and routing. Configured home/office LAN/WAN setups end-to-end as part of IT support training.',
-    tags: ['GNS3', 'Packet Tracer', 'TCP/IP', 'DHCP', 'VLANs'],
-    live: null,
-    code: null,
-  },
+ 
+ 
+]
+
+// Live WordPress client sites built & maintained during 2 years at Synctale.
+export const wordpressSites = [
+  { name: 'Ain Wazein Medical Village', tag: 'Healthcare', url: 'https://awmv.org/', image: '/WORDPRESS/AINWZEIN.webp' },
+  { name: 'Al Synapse', tag: 'Corporate', url: 'https://al-synapse.com/al-synapse/', image: '/WORDPRESS/alsynapse.webp' },
+  { name: 'Casa de Richela', tag: 'Brand', url: 'https://casaderichela.com/', image: '/WORDPRESS/casa.webp' },
+  { name: 'Safenet Insurance', tag: 'Insurance brokerage', url: 'https://safenetadvisor.com/', image: '/WORDPRESS/safnet.webp' },
+  { name: 'Sterling Bros', tag: 'Investment · UK', url: 'https://sterlingbros.co.uk/', image: '/WORDPRESS/sterling.webp' },
+  { name: 'Sanadi', tag: 'Home healthcare', url: 'https://sanadilb.com/', image: '/WORDPRESS/Sanadi.webp' },
 ]
 
 export const education = [
