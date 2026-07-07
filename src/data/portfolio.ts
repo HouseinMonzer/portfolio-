@@ -50,7 +50,7 @@ export const experience = [
     role: 'Freelance Web Developer',
     company: 'Self-employed',
     location: 'Lebanon',
-    period: 'July 2025 – Present',
+    period: 'July 2024 – Present',
     bullets: [
       'Delivered alitheinsurer.com — a trilingual (EN/AR/FR) marketing site for a licensed insurance consultant, from design to production on Vercel.',
       'Building SouQna, a multi-vendor marketplace for Lebanon: React + TypeScript front end, Node.js/Prisma/Neon Postgres backend, JWT auth.',
