@@ -136,9 +136,7 @@ export default function Projects() {
               <p className="text-xs text-slate-500 mt-1 leading-relaxed">
                 Additional client sites over 2 years at Synctale
               </p>
-              <span className="mt-3 inline-flex items-center gap-1 text-xs text-cyan-400/80 font-mono">
-                scroll <ArrowRight size={12} />
-              </span>
+            
             </div>
           </div>
         </div>
