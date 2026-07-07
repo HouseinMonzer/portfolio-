@@ -2,7 +2,7 @@ export const personal = {
   name: 'Housein Monzer',
   title: 'Full-Stack Web Developer',
   roles: ['Full-Stack Developer', 'React + TypeScript Engineer', 'WordPress Developer'],
-  location: 'Beirut, Lebanon',
+  location: 'Lebanon',
   email: 'houseinmonzer@proton.me',
   phone: '+961 81 960 352',
   linkedin: 'https://www.linkedin.com/in/housein-monzer-4b5a7a246/',
