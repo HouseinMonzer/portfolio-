@@ -109,7 +109,7 @@ export default function Projects() {
                 rel="noopener noreferrer"
                 className="group shrink-0 w-60 sm:w-64 snap-start card-glow rounded-xl overflow-hidden"
               >
-                <div className="aspect-[16/10] bg-navy-900 overflow-hidden">
+                <div className="aspect-[19/10] bg-navy-900 overflow-hidden">
                   <img
                     src={site.image}
                     alt={`${site.name} website`}
