@@ -1,5 +1,5 @@
 import type { RefObject } from 'react'
-import { ExternalLink, Github, Sparkles, ArrowRight } from 'lucide-react'
+import { ExternalLink, Github, Sparkles } from 'lucide-react'
 import { projects, wordpressSites } from '../data/portfolio'
 import { useInView } from '../hooks/useInView'
 
