@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1584 396" width="1584" height="396">
+  <style>@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&amp;family=JetBrains+Mono:wght@500&amp;family=Inter:wght@500&amp;display=swap');</style>
+  <defs>
+    <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r="1.6" fill="#161d31"/></pattern>
+    <linearGradient id="mark" x1="310" y1="330" x2="770" y2="750" gradientUnits="userSpaceOnUse"><stop stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+    <linearGradient id="lit" x1="0" y1="0" x2="1584" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+    <linearGradient id="name" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#f8fafc"/><stop offset="1" stop-color="#cbd5e1"/></linearGradient>
+    <filter id="neon" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <radialGradient id="glow0" cx="1385" cy="198" r="360" gradientUnits="userSpaceOnUse"><stop stop-color="#22d3ee" stop-opacity="0.16"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glow1" cx="760" cy="420" r="420" gradientUnits="userSpaceOnUse"><stop stop-color="#8b5cf6" stop-opacity="0.12"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1584" height="396" fill="#04060b"/>
+  <rect width="1584" height="396" fill="url(#dots)"/>
+  <rect width="1584" height="396" fill="url(#glow0)"/>
+  <rect width="1584" height="396" fill="url(#glow1)"/>
+  <g fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-10 78H150L196 32H430" stroke="#1e2740"/>
+    <path d="M-10 198H222L268 152H566" stroke="#1e2740"/>
+    <path d="M-10 258H258L304 212H464" stroke="#1e2740"/>
+    <path d="M1594 322H1210.8L1180.8 352H1110" stroke="#1e2740"/>
+    <path d="M1594 354H1230L1200 384H1042" stroke="#1e2740"/>
+    <g filter="url(#soft)"><path d="M-10 138H186L232 92H498" stroke="url(#lit)" stroke-opacity=".85"/><path d="M-10 318H294L340 272H532" stroke="url(#lit)" stroke-opacity=".85"/><path d="M1594 290H1191.6L1161.6 320H1008" stroke="url(#lit)" stroke-opacity=".85"/></g>
+  </g>
+  <g stroke-width="4">
+    <circle cx="430" cy="32" r="8" fill="#04060b" stroke="#2a3452"/>
+    <circle cx="498" cy="92" r="8" fill="#04060b" stroke="#22d3ee"/>
+    <circle cx="566" cy="152" r="8" fill="#04060b" stroke="#2a3452"/>
+    <circle cx="464" cy="212" r="8" fill="#04060b" stroke="#2a3452"/>
+    <circle cx="532" cy="272" r="8" fill="#04060b" stroke="#22d3ee"/>
+    <circle cx="1008" cy="320" r="8" fill="#04060b" stroke="#22d3ee"/>
+    <circle cx="1110" cy="352" r="8" fill="#04060b" stroke="#2a3452"/>
+    <circle cx="1042" cy="384" r="8" fill="#04060b" stroke="#2a3452"/>
+  </g>
+  <g transform="translate(1385 198) scale(0.34) translate(-540 -540)" filter="url(#neon)">
+    <path d="M310 330v420M450 330v420M310 540h140M590 750V330l90 90 90-90v420" fill="none" stroke="url(#mark)" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#04060b" stroke="url(#mark)" stroke-width="12">
+      <circle cx="310" cy="330" r="26"/><circle cx="310" cy="750" r="26"/><circle cx="450" cy="330" r="26"/>
+      <circle cx="450" cy="750" r="26"/><circle cx="590" cy="750" r="26"/><circle cx="770" cy="750" r="26"/>
+    </g>
+    <g fill="#e2e8f0"><circle cx="310" cy="540" r="16"/><circle cx="450" cy="540" r="16"/><circle cx="680" cy="420" r="16"/></g>
+  </g>
+  <g text-anchor="start">
+    <text x="600" y="122" font-family="'JetBrains Mono', Consolas, monospace" font-size="18" font-weight="500" fill="#64748b">// hello, I'm</text>
+    <text x="600" y="188" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="60" font-weight="600" fill="url(#name)" letter-spacing="-1">Housein Monzer</text>
+    <text x="600" y="232" font-family="'JetBrains Mono', Consolas, monospace" font-size="24" font-weight="500" fill="#22d3ee"><tspan fill="#a78bfa">&gt;</tspan> Full-Stack Developer</text>
+    <text x="600" y="272" font-family="Inter, 'Segoe UI', sans-serif" font-size="20" font-weight="500" fill="#94a3b8" style="white-space:pre">React<tspan fill="#475569">   ·   </tspan>TypeScript<tspan fill="#475569">   ·   </tspan>Node.js<tspan fill="#475569">   ·   </tspan>PostgreSQL</text>
+    
+  </g>
+</svg>

@@ -5,45 +5,51 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       colors: {
-        navy: {
-          950: '#020817',
-          900: '#0f172a',
-          800: '#1e293b',
-          700: '#334155',
+        ink: {
+          950: '#04060b',
+          900: '#070a12',
+          850: '#0a0e19',
+          800: '#0e1322',
+          700: '#161d31',
+          600: '#222b45',
         },
-        cyan: {
-          400: '#22d3ee',
-          500: '#06b6d4',
+        accent: {
+          DEFAULT: '#22d3ee',
+          soft: '#67e8f9',
+          deep: '#0891b2',
         },
+        violet: {
+          400: '#a78bfa',
+          500: '#8b5cf6',
+          600: '#7c3aed',
+        },
+      },
+      boxShadow: {
+        glow: '0 0 0 1px rgba(34,211,238,.25), 0 10px 40px -10px rgba(34,211,238,.45)',
+        card: '0 1px 0 0 rgba(255,255,255,.04) inset, 0 20px 50px -20px rgba(0,0,0,.6)',
       },
       animation: {
-        'fade-in': 'fadeIn 0.6s ease-out forwards',
-        'slide-up': 'slideUp 0.6s ease-out forwards',
-        'pulse-slow': 'pulse 3s ease-in-out infinite',
-        'typewriter': 'typewriter 3s steps(40) 1s forwards',
-        'blink': 'blink 1s step-end infinite',
-        'spin-slow': 'spin 8s linear infinite',
-        'float': 'float 4s ease-in-out infinite',
+        marquee: 'marquee 40s linear infinite',
+        'spin-slow': 'spin 14s linear infinite',
+        shimmer: 'shimmer 2.5s linear infinite',
+        blink: 'blink 1s step-end infinite',
       },
       keyframes: {
-        fadeIn: {
-          from: { opacity: '0' },
-          to: { opacity: '1' },
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-50%)' },
         },
-        slideUp: {
-          from: { opacity: '0', transform: 'translateY(30px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
+        shimmer: {
+          from: { backgroundPosition: '200% 0' },
+          to: { backgroundPosition: '-200% 0' },
         },
         blink: {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
         },
       },
     },

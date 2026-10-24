@@ -1,125 +1,221 @@
-import type { RefObject } from 'react'
-import { MapPin, Mail, Phone, Linkedin, Github, Download, ArrowDown } from 'lucide-react'
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { ArrowDownRight, ArrowUpRight, Download, Github, Linkedin, MapPin } from 'lucide-react'
 import { personal } from '../data/portfolio'
-import { useTypewriter } from '../hooks/useTypewriter'
-import { useInView } from '../hooks/useInView'
+import { EASE, scrollToId } from '../lib/scroll'
+import { useLocalTime } from '../hooks/useLocalTime'
+import { Magnetic } from './ui/Magnetic'
+import { ErrorBoundary } from './ui/ErrorBoundary'
 
-export default function Hero() {
-  const typed = useTypewriter(personal.roles)
-  const { ref, inView } = useInView()
+const HeroScene = lazy(() => import('./three/HeroScene'))
+
+function webglAvailable() {
+  try {
+    const c = document.createElement('canvas')
+    return Boolean(c.getContext('webgl2') || c.getContext('webgl'))
+  } catch {
+    return false
+  }
+}
+
+function Letters({ text, delay, className, show }: { text: string; delay: number; className?: string; show: boolean }) {
+  return (
+    <span className={`inline-block ${className ?? ''}`} aria-hidden>
+      {text.split('').map((ch, i) => (
+        <span key={i} className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+          <motion.span
+            className="inline-block"
+            initial={{ y: '115%' }}
+            animate={{ y: show ? '0%' : '115%' }}
+            transition={{ duration: 1.1, delay: delay + i * 0.045, ease: EASE }}
+          >
+            {ch}
+          </motion.span>
+        </span>
+      ))}
+    </span>
+  )
+}
+
+function RoleRotator({ roles }: { roles: string[] }) {
+  const [i, setI] = useState(0)
+  useEffect(() => {
+    const id = setInterval(() => setI((n) => (n + 1) % roles.length), 2800)
+    return () => clearInterval(id)
+  }, [roles.length])
+  return (
+    <span className="relative inline-flex h-[1.4em] overflow-hidden align-bottom">
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={roles[i]}
+          initial={{ y: '100%', opacity: 0 }}
+          animate={{ y: '0%', opacity: 1 }}
+          exit={{ y: '-100%', opacity: 0 }}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="text-gradient whitespace-nowrap font-medium"
+        >
+          {roles[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  )
+}
+
+export default function Hero({ ready }: { ready: boolean }) {
+  const ref = useRef<HTMLElement>(null)
+  const reduce = useReducedMotion()
+  const time = useLocalTime('Asia/Beirut')
+  const [gl, setGl] = useState(false)
+  const [visible, setVisible] = useState(true)
+
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
+
+  useEffect(() => setGl(webglAvailable()), [])
+
+  // Pause the WebGL render loop while the hero is off-screen.
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { threshold: 0 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  // Intro animations are held until the preloader lifts (`ready`).
+  const fadeUp = (delay: number) => ({
+    initial: { opacity: 0, y: 20 },
+    animate: ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
+    transition: { duration: 0.9, delay, ease: EASE },
+  })
+  const [first, last] = personal.name.split(' ')
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '3s' }} />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '3s', animationDelay: '1.5s' }} />
+    <section ref={ref} id="hero" className="relative flex min-h-[100svh] items-center overflow-hidden">
+      {/* Background layers */}
+      <div className="grid-bg pointer-events-none absolute inset-0" />
+      <div className="pointer-events-none absolute -left-40 top-1/4 h-[480px] w-[480px] rounded-full bg-accent/10 blur-[120px]" />
+      <div className="pointer-events-none absolute -right-20 bottom-0 h-[420px] w-[420px] rounded-full bg-violet-500/10 blur-[120px]" />
 
-      <div
-        ref={ref as RefObject<HTMLDivElement>}
-        className={`relative max-container w-full px-4 sm:px-6 lg:px-8 pt-24 pb-12 transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      {gl && (
+        <motion.div
+          className="absolute inset-0"
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={ready ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 2, ease: EASE }}
+          aria-hidden
+        >
+          <ErrorBoundary fallback={null}>
+            <Suspense fallback={null}>
+              <HeroScene frameloop={reduce ? 'demand' : visible ? 'always' : 'never'} />
+            </Suspense>
+          </ErrorBoundary>
+        </motion.div>
+      )}
+      {/* Legibility scrim over the 3D on small screens */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink-950/30 via-ink-950/40 to-ink-950 lg:bg-gradient-to-r lg:from-ink-950/80 lg:via-ink-950/20 lg:to-transparent" />
+
+      <motion.div style={{ y: contentY, opacity: contentOpacity }} className="container-x relative z-10 pb-24 pt-32">
+        <motion.div
+          {...fadeUp(0.1)}
+          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-emerald-400/20 bg-emerald-400/[0.06] py-1.5 pl-2 pr-4 text-xs text-emerald-300 backdrop-blur"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+          </span>
+          Available for freelance & full-time roles
+        </motion.div>
+
+        <h1 className="font-display text-[clamp(3.2rem,11vw,9.5rem)] font-semibold leading-[0.9] tracking-[-0.04em] text-white">
+          <span className="sr-only">{personal.name}</span>
+          <Letters text={first} delay={0.2} show={ready} />
+          <br />
+          <Letters text={last} delay={0.45} show={ready} className="text-gradient" />
+        </h1>
+
+        <motion.p
+          {...fadeUp(0.9)}
+          className="mt-8 flex flex-wrap items-baseline gap-x-3 font-display text-xl text-slate-300 sm:text-2xl lg:text-3xl"
+        >
+          <span>I'm a</span>
+          <RoleRotator roles={personal.roles} />
+        </motion.p>
+
+        <motion.p
+          {...fadeUp(1.05)}
+          className="mt-6 max-w-xl text-base leading-relaxed text-slate-400 sm:text-lg"
+        >
+          I design and build fast, polished web products end-to-end — from pixel-perfect React interfaces to typed
+          APIs and Postgres. Currently shipping <span className="text-white">SouQna</span>, a multi-vendor marketplace
+          for Lebanon.
+        </motion.p>
+
+        <motion.div
+          {...fadeUp(1.2)}
+          className="mt-10 flex flex-wrap items-center gap-3"
+        >
+          <Magnetic>
+            <button onClick={() => scrollToId('projects')} className="btn-primary group shadow-glow" data-cursor="View">
+              See my work
+              <ArrowDownRight size={16} className="transition-transform duration-300 group-hover:rotate-[-45deg]" />
+            </button>
+          </Magnetic>
+          <Magnetic>
+            <a href={personal.cv} download className="btn-ghost">
+              <Download size={15} /> Download CV
+            </a>
+          </Magnetic>
+          <button onClick={() => scrollToId('contact')} className="group inline-flex items-center gap-1.5 px-3 py-3 text-sm font-semibold text-slate-400 transition-colors hover:text-white">
+            Let's talk <ArrowUpRight size={15} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </button>
+        </motion.div>
+      </motion.div>
+
+      {/* Bottom meta bar */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: ready ? 1 : 0 }}
+        transition={{ duration: 1, delay: 1.5 }}
+        className="container-x absolute inset-x-0 bottom-6 z-10 flex items-end justify-between gap-6 text-xs text-slate-500"
       >
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-16">
-
-          {/* Left: Text */}
-          <div className="flex-1 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 bg-navy-800/80 border border-cyan-500/30 rounded-full px-4 py-1.5 mb-6 text-sm text-cyan-400 font-mono">
-              <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
-              Available for opportunities
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-4 tracking-tight leading-tight">
-              <span className="text-white">Housein</span>{' '}
-              <span className="gradient-text">Monzer</span>
-            </h1>
-
-            <div className="h-9 mb-5 flex items-center justify-center lg:justify-start">
-              <span className="text-lg sm:text-xl lg:text-2xl font-mono text-slate-300">
-                {typed}
-                <span className="text-cyan-400 animate-[blink_1s_step-end_infinite]">|</span>
-              </span>
-            </div>
-
-            <p className="max-w-xl mx-auto lg:mx-0 text-slate-400 text-base sm:text-lg leading-relaxed mb-8">
-              Full-stack developer building React + TypeScript applications. Currently shipping
-              <span className="text-cyan-400"> SouQna</span>, a multi-vendor marketplace for Lebanon.
-            </p>
-
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-8">
-              <a href={`mailto:${personal.email}`}
-                className="flex items-center gap-1.5 bg-navy-800/60 border border-slate-700 hover:border-cyan-500/60 rounded-full px-3 py-1.5 text-xs text-slate-300 hover:text-cyan-400 transition-all">
-                <Mail size={12} />
-                <span className="hidden sm:inline">{personal.email}</span>
-                <span className="sm:hidden">Email</span>
-              </a>
-              <a href={`tel:${personal.phone}`}
-                className="flex items-center gap-1.5 bg-navy-800/60 border border-slate-700 hover:border-cyan-500/60 rounded-full px-3 py-1.5 text-xs text-slate-300 hover:text-cyan-400 transition-all">
-                <Phone size={12} />
-                {personal.phone}
-              </a>
-              <span className="flex items-center gap-1.5 bg-navy-800/60 border border-slate-700 rounded-full px-3 py-1.5 text-xs text-slate-300">
-                <MapPin size={12} />
-                {personal.location}
-              </span>
-              <a href={personal.github} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-1.5 bg-navy-800/60 border border-slate-700 hover:border-cyan-500/60 rounded-full px-3 py-1.5 text-xs text-slate-300 hover:text-cyan-400 transition-all">
-                <Github size={12} />
-                GitHub
-              </a>
-              <a href={personal.linkedin} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-1.5 bg-navy-800/60 border border-slate-700 hover:border-cyan-500/60 rounded-full px-3 py-1.5 text-xs text-slate-300 hover:text-cyan-400 transition-all">
-                <Linkedin size={12} />
-                LinkedIn
-              </a>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
-              <button
-                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold px-7 py-2.5 rounded-full transition-all shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 text-sm">
-                View My Work
-              </button>
-              <a
-                href={personal.cv}
-                download
-                className="inline-flex items-center gap-2 border border-slate-600 hover:border-cyan-500 text-slate-300 hover:text-cyan-400 font-semibold px-7 py-2.5 rounded-full transition-all text-sm">
-                <Download size={15} /> Download CV
-              </a>
-              <button
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-slate-400 hover:text-cyan-400 font-semibold px-3 py-2.5 transition-all text-sm">
-                Get In Touch →
-              </button>
-            </div>
-          </div>
-
-          {/* Right: Avatar */}
-          <div className="shrink-0 flex items-center justify-center">
-            <div className="relative">
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-56 h-16 bg-cyan-500/20 blur-3xl rounded-full pointer-events-none" />
-              <img
-                src="/avatar.png"
-                alt="Housein Monzer"
-                className="avatar-3d relative w-64 h-64 sm:w-72 sm:h-72 lg:w-[340px] lg:h-[340px] xl:w-[380px] xl:h-[380px] object-contain"
-                style={{ filter: 'drop-shadow(0 24px 48px rgba(6,182,212,0.22)) drop-shadow(0 8px 20px rgba(0,0,0,0.55))' }}
-              />
-              <div className="absolute top-8 -left-2 sm:-left-4 bg-navy-800/95 border border-green-500/50 rounded-xl px-3 py-2 shadow-lg shadow-black/40 backdrop-blur-sm z-10">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse shrink-0" />
-                  <p className="text-xs text-green-400 font-semibold whitespace-nowrap">Open to Work</p>
-                </div>
-              </div>
-              <div className="absolute bottom-10 -right-2 sm:-right-4 bg-navy-800/95 border border-cyan-500/40 rounded-xl px-3 py-2 shadow-lg shadow-black/40 backdrop-blur-sm text-right z-10">
-                <p className="text-[10px] text-slate-400 leading-none mb-0.5">Experience</p>
-                <p className="text-sm font-bold text-cyan-400 leading-none">~2 Years</p>
-              </div>
-            </div>
-          </div>
+        <div className="flex items-center gap-5">
+          <span className="inline-flex items-center gap-1.5">
+            <MapPin size={13} className="text-accent" /> Beirut, {personal.location}
+          </span>
+          <span className="hidden font-mono sm:inline">{time} local</span>
         </div>
 
-        <div className="mt-14 text-center animate-bounce text-slate-500">
-          <ArrowDown size={20} className="mx-auto" />
+        <button onClick={() => scrollToId('about')} className="group hidden flex-col items-center gap-2 md:flex" aria-label="Scroll to About">
+          <span className="font-mono uppercase tracking-[0.3em]">Scroll</span>
+          <span className="relative h-10 w-px overflow-hidden bg-white/10">
+            <motion.span
+              className="absolute left-0 top-0 h-4 w-px bg-accent"
+              animate={{ y: [-16, 40] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </span>
+        </button>
+
+        <div className="flex items-center gap-2">
+          {[
+            { href: personal.github, icon: Github, label: 'GitHub' },
+            { href: personal.linkedin, icon: Linkedin, label: 'LinkedIn' },
+          ].map(({ href, icon: Icon, label }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-slate-400 transition-colors hover:border-accent/50 hover:text-accent"
+            >
+              <Icon size={15} />
+            </a>
+          ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }

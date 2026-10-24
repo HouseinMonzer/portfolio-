@@ -12,35 +12,37 @@ export const personal = {
     'Computer Science graduate building production web applications with React, TypeScript, and PostgreSQL. Currently shipping SouQna, a multi-vendor marketplace for Lebanon. Two years of WordPress development at Synctale and a working foundation in IT support and networking from hands-on practice and Google certifications.',
 }
 
-export const skillCategories = [
+export type SkillIcon = 'globe' | 'database' | 'code' | 'palette' | 'network' | 'wrench'
+
+export const skillCategories: { title: string; icon: SkillIcon; skills: string[] }[] = [
   {
     title: 'Web Development & CMS',
-    icon: '🌐',
+    icon: 'globe',
     skills: ['React', 'TypeScript', 'Vite', 'TailwindCSS', 'Zustand', 'WordPress', 'PHP', 'ASP.NET'],
   },
   {
     title: 'Backend & Databases',
-    icon: '🗄️',
+    icon: 'database',
     skills: ['Node.js', 'Prisma', 'PostgreSQL (Neon)', 'MySQL', 'JWT Auth', 'REST APIs'],
   },
   {
     title: 'Programming & Scripting',
-    icon: '💻',
+    icon: 'code',
     skills: ['JavaScript', 'TypeScript', 'Python', 'Java', 'C'],
   },
   {
     title: 'UI/UX & Design',
-    icon: '🎨',
+    icon: 'palette',
     skills: ['Figma', 'Canva', 'Responsive Design'],
   },
   {
     title: 'Networking & Systems',
-    icon: '🔌',
+    icon: 'network',
     skills: ['TCP/IP', 'DNS', 'DHCP', 'LAN/WAN', 'VLANs', 'Router & Switch Config'],
   },
   {
     title: 'Tools & Platforms',
-    icon: '🛠️',
+    icon: 'wrench',
     skills: ['Git', 'GitHub', 'Netlify', 'UNIX', 'Microsoft Office'],
   },
 ]
@@ -108,8 +110,6 @@ export const projects: Project[] = [
     featured: true,
     status: 'Live',
   },
- 
- 
 ]
 
 // Live WordPress client sites built & maintained during 2 years at Synctale.
@@ -127,7 +127,6 @@ export const education = [
     degree: 'Bachelor of Science (BSc) in Computer Science',
     institution: 'Lebanese University – Faculty of Science (Hadat)',
     period: '2021 – 2024',
-    icon: '🎓',
   },
 ]
 
@@ -163,4 +162,24 @@ export const languages = [
   { name: 'Arabic', level: 'Native', percent: 100 },
   { name: 'English', level: 'Good Working Knowledge', percent: 75 },
   { name: 'French', level: 'Basic', percent: 30 },
+]
+
+// ── Derived stats (computed from the data above so they never go stale) ──
+const CAREER_START = new Date(2023, 9, 1) // Synctale, October 2023
+export const yearsExperience = Math.max(1, Math.floor((Date.now() - CAREER_START.getTime()) / (365.25 * 24 * 3600 * 1000)))
+
+export const stats = [
+  { value: yearsExperience, suffix: '+', label: 'Years shipping for clients' },
+  { value: projects.length + wordpressSites.length, suffix: '+', label: 'Live sites delivered' },
+  { value: certifications.length, suffix: '', label: 'Certifications' },
+  { value: languages.length, suffix: '', label: 'Languages spoken' },
+]
+
+export const navLinks = [
+  { id: 'about', label: 'About' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'projects', label: 'Work' },
+  { id: 'education', label: 'Education' },
+  { id: 'contact', label: 'Contact' },
 ]

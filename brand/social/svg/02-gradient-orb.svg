@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080">
+  <defs>
+    <filter id="b-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="90"/></filter>
+    <filter id="b-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="60"/></filter>
+    <filter id="b-grain">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .09 0"/>
+    </filter>
+    <clipPath id="b-clip"><circle cx="540" cy="540" r="360"/></clipPath>
+    <mask id="b-cut">
+      <rect width="1080" height="1080" fill="#fff"/>
+      <path d="M440 400v280M640 400v280M440 540h200" stroke="#000" stroke-width="72" stroke-linecap="round"/>
+      <circle cx="738" cy="680" r="38" fill="#000"/>
+    </mask>
+  </defs>
+  <rect width="1080" height="1080" fill="#04060b"/>
+  <circle cx="540" cy="560" r="330" fill="#7c3aed" opacity=".45" filter="url(#b-glow)"/>
+  <g mask="url(#b-cut)">
+    <g clip-path="url(#b-clip)">
+      <rect width="1080" height="1080" fill="#4c1d95"/>
+      <g filter="url(#b-blur)">
+        <circle cx="390" cy="360" r="260" fill="#22d3ee"/>
+        <circle cx="760" cy="330" r="200" fill="#a78bfa"/>
+        <circle cx="720" cy="760" r="250" fill="#6366f1"/>
+        <circle cx="330" cy="780" r="180" fill="#0891b2"/>
+      </g>
+      <rect width="1080" height="1080" filter="url(#b-grain)"/>
+    </g>
+  </g>
+  <circle cx="540" cy="540" r="359" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="2"/>
+</svg>

@@ -1,198 +1,170 @@
-import type { RefObject } from 'react'
-import { ExternalLink, Github, Sparkles } from 'lucide-react'
-import { projects, wordpressSites } from '../data/portfolio'
-import { useInView } from '../hooks/useInView'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef } from 'react'
+import { ArrowUpRight, Github, Sparkles } from 'lucide-react'
+import { projects, wordpressSites, type Project } from '../data/portfolio'
+import { EASE } from '../lib/scroll'
+import { Reveal } from './ui/Reveal'
+import { SectionHeading } from './ui/SectionHeading'
+import { TiltCard } from './ui/TiltCard'
 
-export default function Projects() {
-  const { ref, inView } = useInView()
-  const featured = projects.filter((p) => p.featured)
-  const rest = projects.filter((p) => !p.featured)
+function FeaturedProject({ p, index }: { p: Project; index: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const imgY = useTransform(scrollYProgress, [0, 1], ['-4%', '4%'])
+  const reversed = index % 2 === 1
 
   return (
-    <section id="projects" className="section-padding">
-      <div
-        ref={ref as RefObject<HTMLDivElement>}
-        className={`max-container transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-      >
-        <h2 className="text-3xl sm:text-4xl font-bold mb-2">
-          Featured <span className="gradient-text">Projects</span>
-        </h2>
-        <div className="w-16 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full mb-10" />
+    <div ref={ref} className="relative grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
+      <Reveal className={`lg:col-span-7 ${reversed ? 'lg:order-2' : ''}`}>
+        <TiltCard as="article" max={5} className="group overflow-hidden p-2">
+          <a href={p.live ?? undefined} target="_blank" rel="noopener noreferrer" data-cursor="Open" className="block" aria-label={`Open ${p.name} live site`}>
+            {/* Browser chrome */}
+            <div className="flex items-center gap-1.5 px-3 py-2.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
+              <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
+              <span className="h-2.5 w-2.5 rounded-full bg-white/10" />
+              <span className="ml-3 truncate rounded-md bg-white/[0.04] px-3 py-1 font-mono text-[10px] text-slate-500">
+                {p.live?.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+              </span>
+            </div>
+            <div className="relative aspect-[2/1] overflow-hidden rounded-[1.25rem] bg-ink-800">
+              {p.image && (
+                <motion.img
+                  src={p.image}
+                  alt={`${p.name} — screenshot`}
+                  loading="lazy"
+                  style={{ y: imgY, scale: 1.08 }}
+                  className="h-full w-full object-cover object-top transition-[filter] duration-700 group-hover:brightness-110"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-950/60 via-transparent to-transparent" />
+              {p.status && (
+                <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-ink-950/80 px-3 py-1 font-mono text-[11px] text-accent backdrop-blur">
+                  <Sparkles size={11} /> {p.status}
+                </span>
+              )}
+            </div>
+          </a>
+        </TiltCard>
+      </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-5 mb-10">
-          {featured.map((p) => (
-            <article key={p.name} className="card-glow rounded-2xl overflow-hidden flex flex-col group">
-              <div className="relative aspect-[20/10] bg-navy-900 overflow-hidden border-b border-slate-700/50">
-                {p.image && (
-                  <img
-                    src={p.image}
-                    alt={`${p.name} preview`}
-                    loading="lazy"
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                    onError={(e) => {
-                      ;(e.currentTarget as HTMLImageElement).style.display = 'none'
-                    }}
-                  />
-                )}
-                {p.status && (
-                  <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 bg-navy-900/90 border border-cyan-500/40 text-cyan-400 text-xs font-mono px-3 py-1 rounded-full backdrop-blur-sm">
-                    <Sparkles size={12} /> {p.status}
-                  </span>
-                )}
-              </div>
+      <Reveal delay={0.15} className={`lg:col-span-5 ${reversed ? 'lg:order-1' : ''}`}>
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-slate-500">
+          <span className="text-accent">0{index + 1}</span> / Featured
+        </p>
+        <h3 className="mt-4 font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl">{p.name}</h3>
+        {p.tagline && <p className="mt-2 text-lg text-accent-soft">{p.tagline}</p>}
+        <p className="mt-5 leading-relaxed text-slate-400">{p.description}</p>
+        <div className="mt-6 flex flex-wrap gap-1.5">
+          {p.tags.map((t) => <span key={t} className="chip">{t}</span>)}
+        </div>
+        <div className="mt-8 flex flex-wrap gap-3">
+          {p.live && (
+            <a href={p.live} target="_blank" rel="noopener noreferrer" className="btn-primary group">
+              Visit live site <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+          )}
+          {p.code && (
+            <a href={p.code} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+              <Github size={15} /> Source
+            </a>
+          )}
+        </div>
+      </Reveal>
+    </div>
+  )
+}
 
-              <div className="p-5 lg:p-6 flex flex-col gap-3 flex-1">
-                <div>
-                  <p className="text-cyan-400 text-xs font-mono mb-1.5 tracking-widest uppercase">
-                    Featured Project
-                  </p>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">{p.name}</h3>
-                  {p.tagline && <p className="text-slate-400 text-sm">{p.tagline}</p>}
-                </div>
-                <p className="text-slate-300 text-sm leading-relaxed">{p.description}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {p.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono px-2.5 py-1 rounded-full"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-2 mt-auto pt-2">
-                  {p.live && (
-                    <a
-                      href={p.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-lg shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all"
-                    >
-                      <ExternalLink size={14} /> Live Demo
-                    </a>
-                  )}
-                  {p.code && (
-                    <a
-                      href={p.code}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 border border-slate-600 hover:border-cyan-500 text-slate-300 hover:text-cyan-400 text-sm font-semibold px-4 py-2 rounded-lg transition-all"
-                    >
-                      <Github size={14} /> Source Code
-                    </a>
-                  )}
-                </div>
-              </div>
-            </article>
-          ))}
+export default function Projects() {
+  const featured = projects.filter((p) => p.featured)
+  const rest = projects.filter((p) => !p.featured)
+  const rail = useRef<HTMLDivElement>(null)
+  const dragging = useRef(false)
+
+  return (
+    <section id="projects" className="section">
+      <div className="container-x">
+        <SectionHeading index="04" eyebrow="Selected work" title="Products I've" accent="designed & shipped.">
+          A mix of full-stack products and client websites: each one live, in production, used by real people.
+        </SectionHeading>
+
+        <div className="space-y-28 sm:space-y-36">
+          {featured.map((p, i) => <FeaturedProject key={p.name} p={p} index={i} />)}
         </div>
 
-        {/* ── WordPress client sites (Synctale) — horizontal scroll gallery ── */}
-        <div className="mt-4 mb-10">
-          <div className="flex flex-wrap items-center gap-3 mb-1.5">
-            <h3 className="text-xl sm:text-2xl font-bold text-white">WordPress Client Sites</h3>
-            <span className="text-xs font-mono text-cyan-400 border border-cyan-500/30 rounded-full px-2.5 py-0.5">
-              Synctale · 2 yrs
-            </span>
+        {rest.length > 0 && (
+          <div className="mt-24 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {rest.map((p) => (
+              <TiltCard key={p.name} as="article" className="flex flex-col gap-3 p-6">
+                <h4 className="font-display text-lg text-white">{p.name}</h4>
+                <p className="flex-1 text-sm text-slate-400">{p.description}</p>
+                <div className="flex flex-wrap gap-1.5">{p.tags.map((t) => <span key={t} className="chip">{t}</span>)}</div>
+              </TiltCard>
+            ))}
           </div>
-          <p className="text-slate-400 text-sm leading-relaxed mb-5 max-w-2xl">
-            Live WordPress sites I designed, built, and maintained for Synctale clients — theme
-            customization, plugin integration, on-page SEO, and load-time optimization.
-          </p>
+        )}
+      </div>
 
-          <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory">
-            {wordpressSites.map((site) => (
-              <a
+      {/* WordPress client work — draggable rail */}
+      <div className="mt-32">
+        <div className="container-x mb-10 flex flex-wrap items-end justify-between gap-6">
+          <Reveal>
+            <p className="eyebrow mb-4">Client websites · Synctale</p>
+            <h3 className="font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              WordPress builds, <span className="text-slate-500">live in production.</span>
+            </h3>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-400">
+              Designed, built and maintained over two years: theme customization, plugin integration, on-page SEO and
+              load-time optimization.
+            </p>
+          </Reveal>
+          <p className="hidden font-mono text-xs text-slate-500 md:block">← drag to explore →</p>
+        </div>
+
+        <div ref={rail} className="overflow-hidden">
+          <motion.div
+            drag="x"
+            dragConstraints={rail}
+            dragElastic={0.08}
+            onDragStart={() => (dragging.current = true)}
+            onDragEnd={() => setTimeout(() => (dragging.current = false), 0)}
+            className="flex w-max cursor-grab gap-5 px-4 active:cursor-grabbing sm:px-6 lg:px-10"
+            data-cursor="Drag"
+          >
+            {wordpressSites.map((site, i) => (
+              <motion.a
                 key={site.url}
                 href={site.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group shrink-0 w-60 sm:w-64 snap-start card-glow rounded-xl overflow-hidden"
+                draggable={false}
+                initial={{ opacity: 0, x: 60 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: i * 0.07, ease: EASE }}
+                onClickCapture={(e) => dragging.current && e.preventDefault() /* a drag isn't a click */}
+                className="group glass w-[280px] shrink-0 overflow-hidden p-2 sm:w-[360px]"
               >
-                <div className="aspect-[19/10] bg-navy-900 overflow-hidden">
-                  <img
-                    src={site.image}
-                    alt={`${site.name} website`}
-                    loading="lazy"
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                  />
+                <div className="aspect-[2/1] overflow-hidden rounded-[1.25rem] bg-ink-800">
+                  <img src={site.image} alt={`${site.name} website`} loading="lazy" draggable={false} className="h-full w-full object-cover object-top transition-transform duration-[1.2s] ease-out group-hover:scale-[1.06]" />
                 </div>
-                <div className="p-3 flex items-center justify-between gap-2">
+                <div className="flex items-center justify-between gap-3 px-3 py-4">
                   <div className="min-w-0">
-                    <p className="text-white text-sm font-semibold truncate group-hover:text-cyan-400 transition-colors">
-                      {site.name}
-                    </p>
-                    <p className="text-slate-500 text-xs truncate">{site.tag}</p>
+                    <p className="truncate font-display text-base text-white">{site.name}</p>
+                    <p className="text-xs text-slate-500">{site.tag}</p>
                   </div>
-                  <ExternalLink size={14} className="text-slate-500 group-hover:text-cyan-400 shrink-0 transition-colors" />
-                </div>
-              </a>
-            ))}
-
-            {/* & more */}
-            <div className="shrink-0 w-52 snap-start rounded-xl border border-dashed border-slate-700 flex flex-col items-center justify-center text-center p-6">
-              <Sparkles size={20} className="mb-2 text-cyan-400/70" />
-              <p className="text-sm font-semibold text-slate-200">& more</p>
-              <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                Additional client sites over 2 years at Synctale
-              </p>
-            
-            </div>
-          </div>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
-          {rest.map((project, idx) => (
-            <article
-              key={project.name}
-              className="card-glow rounded-xl p-5 flex flex-col gap-3 group"
-              style={{ transitionDelay: `${idx * 60}ms` }}
-            >
-              <div>
-                <h4 className="font-semibold text-white group-hover:text-cyan-400 transition-colors">
-                  {project.name}
-                </h4>
-                {project.tagline && (
-                  <p className="text-slate-500 text-xs mt-0.5">{project.tagline}</p>
-                )}
-              </div>
-              <p className="text-slate-400 text-sm leading-relaxed flex-1">{project.description}</p>
-              <div className="flex flex-wrap gap-1.5">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono px-2.5 py-1 rounded-full"
-                  >
-                    {tag}
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 text-slate-400 transition-all duration-300 group-hover:rotate-45 group-hover:border-accent group-hover:bg-accent group-hover:text-ink-950">
+                    <ArrowUpRight size={16} />
                   </span>
-                ))}
-              </div>
-              {(project.live || project.code) && (
-                <div className="flex gap-3 border-t border-slate-700/50 mt-1 pt-3">
-                  {project.live && (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-cyan-400 hover:text-cyan-300 text-xs font-medium transition-colors"
-                    >
-                      <ExternalLink size={12} /> Live
-                    </a>
-                  )}
-                  {project.code && (
-                    <a
-                      href={project.code}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-slate-400 hover:text-cyan-400 text-xs font-medium transition-colors"
-                    >
-                      <Github size={12} /> Code
-                    </a>
-                  )}
                 </div>
-              )}
-            </article>
-          ))}
+              </motion.a>
+            ))}
+            <div className="glass flex w-[240px] shrink-0 flex-col items-center justify-center gap-2 border-dashed p-8 text-center">
+              <Sparkles size={20} className="text-accent" />
+              <p className="font-display text-white">& more</p>
+              <p className="text-xs leading-relaxed text-slate-500">Additional client sites delivered at Synctale</p>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

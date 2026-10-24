@@ -1,77 +1,83 @@
-import type { RefObject } from 'react'
-import { GraduationCap, Award } from 'lucide-react'
-import { education, certifications, languages } from '../data/portfolio'
-import { useInView } from '../hooks/useInView'
+import { motion } from 'framer-motion'
+import { Award, GraduationCap, Languages } from 'lucide-react'
+import { certifications, education, languages } from '../data/portfolio'
+import { EASE } from '../lib/scroll'
+import { Reveal } from './ui/Reveal'
+import { SectionHeading } from './ui/SectionHeading'
+import { TiltCard } from './ui/TiltCard'
 
 export default function Education() {
-  const { ref, inView } = useInView()
-
   return (
-    <section id="education" className="section-padding bg-navy-900/40">
-      <div
-        ref={ref as RefObject<HTMLDivElement>}
-        className={`max-container transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-      >
-        <h2 className="text-3xl sm:text-4xl font-bold mb-2">
-          Education & <span className="gradient-text">Certifications</span>
-        </h2>
-        <div className="w-16 h-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full mb-10" />
+    <section id="education" className="section">
+      <div className="container-x">
+        <SectionHeading index="05" eyebrow="Education" title="Always" accent="learning." />
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Education */}
-          <div className="lg:col-span-1">
-            <h3 className="flex items-center gap-2 text-lg font-semibold text-white mb-5">
-              <GraduationCap size={20} className="text-cyan-400" /> Education
-            </h3>
-            {education.map((edu) => (
-              <div key={edu.degree} className="card-glow rounded-xl p-5">
-                <span className="text-3xl mb-3 block">{edu.icon}</span>
-                <h4 className="font-semibold text-white mb-2 leading-snug">{edu.degree}</h4>
-                <p className="text-cyan-400 text-sm mb-1">{edu.institution}</p>
-                <p className="text-slate-500 text-sm">{edu.period}</p>
-              </div>
-            ))}
-
-            {/* Languages */}
-            <h3 className="flex items-center gap-2 text-lg font-semibold text-white mt-8 mb-5">
-              🌍 Languages
-            </h3>
-            <div className="card-glow rounded-xl p-5 space-y-4">
-              {languages.map((lang) => (
-                <div key={lang.name}>
-                  <div className="flex justify-between text-sm mb-1.5">
-                    <span className="text-slate-200 font-medium">{lang.name}</span>
-                    <span className="text-slate-400">{lang.level}</span>
-                  </div>
-                  <div className="h-1.5 bg-navy-900 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full transition-all duration-1000"
-                      style={{ width: inView ? `${lang.percent}%` : '0%' }}
-                    />
-                  </div>
+        <div className="grid gap-4 lg:grid-cols-12">
+          {/* Degree */}
+          {education.map((edu) => (
+            <Reveal key={edu.degree} className="lg:col-span-7">
+              <TiltCard max={4} className="flex h-full flex-col justify-between gap-10 overflow-hidden p-8">
+                <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
+                <div className="flex items-center justify-between">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-accent/20 bg-accent/10 text-accent">
+                    <GraduationCap size={22} />
+                  </span>
+                  <span className="chip">{edu.period}</span>
                 </div>
-              ))}
+                <div>
+                  <h3 className="font-display text-2xl font-medium leading-snug text-white sm:text-3xl">{edu.degree}</h3>
+                  <p className="mt-3 text-slate-400">{edu.institution}</p>
+                </div>
+              </TiltCard>
+            </Reveal>
+          ))}
+
+          {/* Languages */}
+          <Reveal delay={0.1} className="lg:col-span-5">
+            <div className="glass h-full p-8">
+              <p className="mb-8 flex items-center gap-2 font-display text-lg text-white">
+                <Languages size={18} className="text-accent" /> Languages
+              </p>
+              <div className="space-y-6">
+                {languages.map((l, i) => (
+                  <div key={l.name}>
+                    <div className="mb-2 flex items-baseline justify-between text-sm">
+                      <span className="text-white">{l.name}</span>
+                      <span className="font-mono text-xs text-slate-500">{l.level}</span>
+                    </div>
+                    <div className="h-1 overflow-hidden rounded-full bg-white/5">
+                      <motion.div
+                        className="h-full rounded-full bg-gradient-to-r from-accent to-violet-500"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${l.percent}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.4, delay: 0.2 + i * 0.15, ease: EASE }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* Certifications */}
-          <div className="lg:col-span-2">
-            <h3 className="flex items-center gap-2 text-lg font-semibold text-white mb-5">
-              <Award size={20} className="text-cyan-400" /> Certifications
-            </h3>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {certifications.map((cert, idx) => (
-                <div
-                  key={cert.name}
-                  className="card-glow rounded-xl p-5 flex flex-col gap-2"
-                  style={{ transitionDelay: `${idx * 60}ms` }}
-                >
-                  <div
-                    className={`w-8 h-1 bg-gradient-to-r ${cert.color} rounded-full mb-1`}
-                  />
-                  <h4 className="text-slate-100 font-medium text-sm leading-snug">{cert.name}</h4>
-                  <p className="text-slate-500 text-xs">{cert.issuer}</p>
-                </div>
+          <div className="lg:col-span-12">
+            <Reveal>
+              <p className="mb-5 mt-8 flex items-center gap-2 font-display text-lg text-white">
+                <Award size={18} className="text-accent" /> Certifications
+              </p>
+            </Reveal>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              {certifications.map((c, i) => (
+                <Reveal key={c.name} delay={i * 0.06}>
+                  <div className="glass group flex h-full flex-col justify-between gap-6 p-5 transition-colors duration-500 hover:border-white/15">
+                    <div className={`h-1 w-10 rounded-full bg-gradient-to-r ${c.color} transition-all duration-500 group-hover:w-16`} />
+                    <div>
+                      <p className="text-sm font-medium leading-snug text-white">{c.name}</p>
+                      <p className="mt-2 font-mono text-[11px] uppercase tracking-widest text-slate-500">{c.issuer}</p>
+                    </div>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>

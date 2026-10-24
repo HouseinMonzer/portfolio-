@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080">
+  <defs>
+    <linearGradient id="d-bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0e1322"/><stop offset="1" stop-color="#04060b"/></linearGradient>
+    <pattern id="d-dots" width="36" height="36" patternUnits="userSpaceOnUse"><circle cx="18" cy="18" r="2" fill="#222b45"/></pattern>
+    <linearGradient id="d-top" x1="280" y1="240" x2="800" y2="540" gradientUnits="userSpaceOnUse"><stop stop-color="#a5f3fc"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+    <linearGradient id="d-left" x1="280" y1="390" x2="540" y2="840" gradientUnits="userSpaceOnUse"><stop stop-color="#0891b2"/><stop offset="1" stop-color="#164e63"/></linearGradient>
+    <linearGradient id="d-right" x1="540" y1="390" x2="800" y2="840" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#3b0764"/></linearGradient>
+    <filter id="d-soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="30"/></filter>
+  </defs>
+  <rect width="1080" height="1080" fill="url(#d-bg)"/>
+  <rect width="1080" height="1080" fill="url(#d-dots)" opacity=".7"/>
+  <ellipse cx="540" cy="880" rx="270" ry="46" fill="#22d3ee" opacity=".22" filter="url(#d-soft)"/>
+  <g stroke="#04060b" stroke-width="5" stroke-linejoin="round">
+    <path d="M540 240 800 390 540 540 280 390z" fill="url(#d-top)"/>
+    <path d="M280 390 540 540v300L280 690z" fill="url(#d-left)"/>
+    <path d="M540 540 800 390v300L540 840z" fill="url(#d-right)"/>
+  </g>
+  <g fill="none" stroke="#f8fafc" stroke-linecap="round" stroke-linejoin="round">
+    <path transform="matrix(260 150 0 300 280 390)" d="M.32.27v.48M.68.27v.48M.32.51h.36" stroke-width="34" vector-effect="non-scaling-stroke"/>
+    <path transform="matrix(260 -150 0 300 540 540)" d="M.24.75V.27l.26.3.26-.3v.48" stroke-width="34" vector-effect="non-scaling-stroke"/>
+  </g>
+</svg>

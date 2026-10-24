@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080">
+  <style>@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&amp;display=swap');</style>
+  <defs>
+    <radialGradient id="a-glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="a-mark" x1="10" y1="18" x2="54" y2="46" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <path id="a-ring" d="M540 162a378 378 0 1 1 0 756a378 378 0 1 1 0-756"/>
+  </defs>
+  <rect width="1080" height="1080" fill="#04060b"/>
+  <rect width="1080" height="1080" fill="url(#a-glow)"/>
+  <circle cx="540" cy="540" r="440" fill="none" stroke="#22d3ee" stroke-opacity=".45" stroke-width="3"/>
+  <circle cx="540" cy="540" r="345" fill="#070a12" stroke="#222b45" stroke-width="3"/>
+  <text font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="40" font-weight="600" fill="#e2e8f0">
+    <textPath href="#a-ring" textLength="2360" lengthAdjust="spacing">HOUSEIN MONZER ✦ FULL-STACK DEVELOPER ✦</textPath>
+  </text>
+  <path transform="translate(284 284) scale(8)" d="M10 46V18M10 32h14M24 46V18l15 20 15-20v28" fill="none" stroke="url(#a-mark)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

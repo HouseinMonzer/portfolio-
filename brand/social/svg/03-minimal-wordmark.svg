@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080">
+  <style>@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&amp;display=swap');</style>
+  <rect width="1080" height="1080" fill="#f5f7fb"/>
+  <path d="M255.6 331.5v357M255.6 552.5a76.5 76.5 0 0 1 153 0v136M476.6 688.5V544a68 68 0 0 1 136 0v144.5M612.6 544a68 68 0 0 1 136 0v144.5" fill="none" stroke="#0a0e19" stroke-width="54.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="823.4" cy="678.3" r="35.7" fill="#06b6d4"/>
+  <text x="540" y="830" text-anchor="middle" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="30" font-weight="500" letter-spacing="10" fill="#64748b">FULL-STACK DEVELOPER</text>
+</svg>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Social Logo Kit</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#04060b; --card:#0a0e19; --line:#161d31; --text:#e2e8f0; --muted:#94a3b8; --accent:#22d3ee; }
+  * { box-sizing:border-box }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 Inter,system-ui,sans-serif; padding:40px 16px }
+  main { max-width:1000px; margin:0 auto }
+  h1 { font:600 32px "Space Grotesk",sans-serif; margin:0 0 4px }
+  .lead { color:var(--muted); margin:0 0 32px; max-width:680px }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:24px; margin-bottom:20px }
+  header { display:flex; align-items:baseline; gap:12px; flex-wrap:wrap }
+  .num { font:500 13px "JetBrains Mono",monospace; color:var(--accent) }
+  h2 { font:600 20px "Space Grotesk",sans-serif; margin:0 }
+  .tag { font:500 11px "JetBrains Mono",monospace; text-transform:uppercase; letter-spacing:.08em; padding:3px 8px; border-radius:99px; border:1px solid var(--line); color:var(--muted) }
+  .tag.pro { color:#67e8f9; border-color:#0e7490 }
+  .tag.cre { color:#c4b5fd; border-color:#6d28d9 }
+  .files { margin-left:auto; display:flex; gap:12px; font:12px "JetBrains Mono",monospace }
+  .files a { color:var(--muted) } .files a:hover { color:var(--accent) }
+  .idea { color:var(--muted); margin:6px 0 18px }
+  .row { display:grid; grid-template-columns:260px 1fr; gap:18px; align-items:start }
+  .square { width:100%; aspect-ratio:1; border-radius:14px; display:block; border:1px solid var(--line) }
+  .mock { display:grid; gap:14px }
+  /* Instagram-style profile header */
+  .ig { background:#fff; color:#0f172a; border-radius:14px; padding:20px; display:flex; gap:22px; align-items:center }
+  .ig img { width:96px; height:96px; border-radius:50%; flex:none; outline:2px solid #e2e8f0; outline-offset:3px }
+  .ig b { font:600 17px Inter,sans-serif; display:block }
+  .ig .stats { display:flex; gap:18px; font-size:14px; margin:6px 0 }
+  .ig .stats span strong { font-weight:600 }
+  .ig p { margin:0; font-size:13px; color:#334155 }
+  /* Dark app / small avatar sizes */
+  .sizes { background:#000; border-radius:14px; padding:16px 20px; display:flex; align-items:center; gap:18px; flex-wrap:wrap }
+  .sizes img { border-radius:50%; display:block }
+  .sizes em { font:12px "JetBrains Mono",monospace; color:var(--muted); font-style:normal }
+  h3 { font:600 24px "Space Grotesk",sans-serif; margin:40px 0 4px }
+  .banner { margin-top:14px }
+  .frame { position:relative }
+  .frame > img:first-child { width:100%; display:block; border-radius:10px }
+  .frame .avatar { position:absolute; border-radius:50%; outline:4px solid var(--card); box-shadow:0 6px 20px rgba(0,0,0,.5) }
+  .frame .crop { position:absolute; top:0; bottom:0; border:2px dashed rgba(250,204,21,.8); border-radius:10px; pointer-events:none }
+  .banner .crop span { position:absolute; top:6px; left:8px; font:11px "JetBrains Mono",monospace; color:#facc15; background:rgba(0,0,0,.6); padding:2px 6px; border-radius:4px }
+  .hint { font:12px "JetBrains Mono",monospace; color:var(--muted); margin:8px 0 0 }
+  @media (max-width:700px) { .row { grid-template-columns:1fr } .files { margin-left:0 } .ig { flex-direction:column; text-align:center } .ig .stats { justify-content:center } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Social logo kit</h1>
+  <p class="lead">Five profile logos for Instagram, LinkedIn, X, Facebook, TikTok and GitHub. Each one is a 1080×1080 PNG that works in a circle crop, plus an editable SVG. Below each logo: how it looks as an Instagram profile and at small avatar sizes.</p>
+  <div id="list"></div>
+
+  <h3>Cover banners · Circuit Monogram</h3>
+  <p class="lead">These match logo 05. The round photo shows roughly where each site puts your profile picture. Your name and skills stay clear of it.</p>
+  <div id="banners"></div>
+</main>
+<script>
+  const logos = [
+    { id: '01-monogram-seal', name: 'Monogram Seal', kind: 'pro', idea: 'Classic badge: a gradient HM monogram inside a ring with your name and title. Polished and trustworthy, a great fit for LinkedIn.' },
+    { id: '02-gradient-orb', name: 'Gradient Orb', kind: 'cre', idea: 'A glowing cyan-to-violet orb with "H." cut out of it. Bold and modern, and it stands out in an Instagram feed.' },
+    { id: '03-minimal-wordmark', name: 'Minimal Wordmark', kind: 'pro', idea: 'Clean lowercase "hm." with a cyan dot on a light background. Calm, agency-style, and easy to read at any size.' },
+    { id: '04-isometric-cube', name: 'Isometric Cube', kind: 'cre', idea: 'A 3D cube with H and M on its faces. Says "builder" and matches the 3D style of your site.' },
+    { id: '05-circuit-monogram', name: 'Circuit Monogram', kind: 'cre', idea: 'HM drawn as glowing circuit traces with nodes. Techy and memorable, and nods to your networking skills.' },
+  ]
+  document.getElementById('list').innerHTML = logos.map((l, i) => `
+    <article class="card">
+      <header>
+        <span class="num">0${i + 1}</span><h2>${l.name}</h2>
+        <span class="tag ${l.kind}">${l.kind === 'pro' ? 'Professional' : 'Creative'}</span>
+        <span class="files"><a href="png/${l.id}.png" download>PNG ↓</a><a href="svg/${l.id}.svg" download>SVG ↓</a></span>
+      </header>
+      <p class="idea">${l.idea}</p>
+      <div class="row">
+        <img class="square" src="png/${l.id}.png" alt="${l.name} logo">
+        <div class="mock">
+          <div class="ig">
+            <img src="png/${l.id}.png" alt="">
+            <div>
+              <b>houseinmonzer</b>
+              <div class="stats"><span><strong>48</strong> posts</span><span><strong>1,204</strong> followers</span><span><strong>312</strong> following</span></div>
+              <p>Housein Monzer · Full-Stack Developer<br>React · TypeScript · Node.js — Lebanon</p>
+            </div>
+          </div>
+          <div class="sizes">
+            <img src="png/${l.id}.png" width="110" height="110" alt="">
+            <img src="png/${l.id}.png" width="56" height="56" alt="">
+            <img src="png/${l.id}.png" width="32" height="32" alt="">
+            <em>110 · 56 · 32 px — profile, comments, notifications</em>
+          </div>
+        </div>
+      </div>
+    </article>`).join('')
+
+  // Avatar placement is approximate (desktop layouts), given as % of the banner's width/height.
+  const banners = [
+    { id: 'banner-linkedin', name: 'LinkedIn', size: '1584 × 396', avatar: { left: 2.2, top: 64, d: 13.5 }, where: 'Profile → pencil icon on the cover' },
+    { id: 'banner-x', name: 'X (Twitter)', size: '1500 × 500', avatar: { left: 2.7, top: 66, d: 22 }, where: 'Profile → Edit profile → header photo' },
+    { id: 'banner-facebook', name: 'Facebook', size: '1640 × 624', avatar: { left: 2.6, top: 82, d: 13.4 }, where: 'Profile → Edit cover photo', crop: { left: 16.2, width: 67.6 } },
+  ]
+  document.getElementById('banners').innerHTML = banners.map((b) => {
+    const [w, h] = b.size.split(' × ').map(Number)
+    const d = b.avatar.d, below = Math.max(0, (b.avatar.top / 100) * h + (d / 100) * w - h) / w * 100
+    return `
+    <article class="card">
+      <header>
+        <h2>${b.name}</h2><span class="tag">${b.size}</span>
+        <span class="files"><a href="png/${b.id}.png" download>PNG ↓</a><a href="svg/${b.id}.svg" download>SVG ↓</a></span>
+      </header>
+      <div class="banner" style="padding-bottom:${below.toFixed(2)}%">
+        <div class="frame">
+          <img src="png/${b.id}.png" alt="${b.name} cover banner">
+          ${b.crop ? `<div class="crop" style="left:${b.crop.left}%;width:${b.crop.width}%"><span>mobile crop</span></div>` : ''}
+          <img class="avatar" src="png/05-circuit-monogram.png" alt="" style="left:${b.avatar.left}%;top:${b.avatar.top}%;width:${d}%">
+        </div>
+      </div>
+      <p class="hint">Upload: ${b.where}</p>
+    </article>`
+  }).join('')
+</script>
+</body>
+</html>

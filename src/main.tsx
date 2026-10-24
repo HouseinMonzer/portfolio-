@@ -1,18 +1,20 @@
-import { StrictMode } from 'react'
-import { createRoot, hydrateRoot } from 'react-dom/client'
+import { lazy, StrictMode, Suspense } from 'react'
+import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 
-const root = document.getElementById('root')!
-const tree = (
-  <StrictMode>
-    <App />
-  </StrictMode>
-)
+// Tiny path router: the private dashboard lives at /admin and ships as its own chunk.
+const Admin = lazy(() => import('./admin/Admin.tsx'))
+const isAdmin = window.location.pathname.replace(/\/$/, '') === '/admin'
 
-// react-snap pre-renders index.html at build time. If markup is already present, hydrate it.
-if (root.hasChildNodes()) {
-  hydrateRoot(root, tree)
-} else {
-  createRoot(root).render(tree)
-}
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    {isAdmin ? (
+      <Suspense fallback={null}>
+        <Admin />
+      </Suspense>
+    ) : (
+      <App />
+    )}
+  </StrictMode>,
+)

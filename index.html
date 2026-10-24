@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="dark" style="background:#04060b">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#06b6d4" />
+    <meta name="theme-color" content="#04060b" />
+    <meta name="color-scheme" content="dark" />
 
     <title>Housein Monzer — Full-Stack Web Developer</title>
-    <meta name="description" content="Full-stack web developer building React + TypeScript applications. Computer Science graduate based in Beirut, currently shipping SouQna — a multi-vendor marketplace for Lebanon." />
+    <meta name="description" content="Housein Monzer — full-stack web developer in Beirut building fast, polished React + TypeScript products with Node.js and PostgreSQL. Currently shipping SouQna, a multi-vendor marketplace for Lebanon." />
     <meta name="author" content="Housein Monzer" />
     <link rel="canonical" href="https://houseinmonzer.vercel.app/" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -17,18 +20,20 @@
     <meta property="og:url" content="https://houseinmonzer.vercel.app/" />
     <meta property="og:title" content="Housein Monzer — Full-Stack Web Developer" />
     <meta property="og:description" content="React + TypeScript developer building SouQna, a multi-vendor Lebanese marketplace. Portfolio, projects, and contact." />
-    <meta property="og:image" content="https://houseinmonzer.vercel.app/avatar.png" />
-    <meta property="og:image:width" content="399" />
-    <meta property="og:image:height" content="600" />
+    <meta property="og:image" content="https://houseinmonzer.vercel.app/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Housein Monzer — Full-Stack Web Developer" />
     <meta property="og:site_name" content="Housein Monzer" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Housein Monzer — Full-Stack Web Developer" />
     <meta name="twitter:description" content="React + TypeScript developer building SouQna, a multi-vendor Lebanese marketplace." />
-    <meta name="twitter:image" content="https://houseinmonzer.vercel.app/avatar.png" />
+    <meta name="twitter:image" content="https://houseinmonzer.vercel.app/og-image.png" />
+    <meta name="twitter:image:alt" content="Housein Monzer — Full-Stack Web Developer" />
 
     <!-- JSON-LD: Person schema -->
     <script type="application/ld+json">
@@ -56,12 +61,14 @@
       }
     </script>
 
+    <link rel="preload" as="image" href="/avatar.png" fetchpriority="low" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>
+    <noscript><p style="color:#cbd5e1;font-family:system-ui;padding:2rem">Housein Monzer — Full-Stack Web Developer. Email: houseinmonzer@proton.me</p></noscript>
 
     <script type="module" src="/src/main.tsx"></script>
   </body>

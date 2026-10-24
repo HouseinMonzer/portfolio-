@@ -1,138 +1,147 @@
-import { useState, useEffect } from 'react'
-import { Menu, X, Github, Linkedin } from 'lucide-react'
-import { personal } from '../data/portfolio'
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { Command, Menu, X } from 'lucide-react'
+import { navLinks, personal } from '../data/portfolio'
+import { EASE, lockScroll, scrollToId } from '../lib/scroll'
+import { Logo } from './ui/Logo'
 
-const links = ['About', 'Skills', 'Experience', 'Projects', 'Education', 'Contact']
-
-export default function Navbar() {
+export default function Navbar({ onOpenPalette }: { onOpenPalette: () => void }) {
   const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const [active, setActive] = useState('hero')
+  const [hidden, setHidden] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const { scrollY } = useScroll()
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  // Hide on scroll down, reveal on scroll up.
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    const prev = scrollY.getPrevious() ?? 0
+    setScrolled(y > 40)
+    setHidden(y > prev && y > 400 && !open)
+  })
 
-  // Scroll-spy: highlight the nav link for the section currently in view.
+  // Scroll-spy
   useEffect(() => {
-    const ids = ['hero', ...links.map((l) => l.toLowerCase())]
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id)
-        })
-      },
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
       { rootMargin: '-45% 0px -50% 0px' },
     )
-    ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null)
-      .forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
+    ;['hero', ...navLinks.map((l) => l.id)].forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) io.observe(el)
+    })
+    return () => io.disconnect()
   }, [])
 
-  const scrollTo = (id: string) => {
+  useEffect(() => {
+    if (!open) return
+    lockScroll(true)
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      lockScroll(false)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [open])
+
+  const go = (id: string) => {
     setOpen(false)
-    document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })
+    setTimeout(() => scrollToId(id), open ? 350 : 0)
   }
 
+  const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-navy-900/95 backdrop-blur-md shadow-lg shadow-black/20' : 'bg-transparent'
-    }`}>
-      <div className="max-container flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
-        <button
-          onClick={() => scrollTo('hero')}
-          className="font-mono text-xl font-bold gradient-text hover:opacity-80 transition-opacity"
+    <>
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: hidden ? -100 : 0 }}
+        transition={{ duration: 0.5, ease: EASE }}
+        className="fixed inset-x-0 top-0 z-50 px-4 pt-4"
+      >
+        <nav
+          aria-label="Primary"
+          className={`mx-auto flex max-w-6xl items-center justify-between rounded-full border px-3 py-2 transition-all duration-500 ${
+            scrolled || open ? 'border-white/10 bg-ink-900/70 shadow-card backdrop-blur-xl' : 'border-transparent bg-transparent'
+          }`}
         >
-          HM<span className="text-cyan-400">.</span>
-        </button>
+          <button onClick={() => go('top')} className="group flex items-center gap-2.5 pl-2" aria-label="Back to top">
+            <span className="relative flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-ink-900 shadow-[0_0_0_0_rgba(34,211,238,0)] transition-shadow duration-300 [--logo-bg:theme(colors.ink.900)] group-hover:shadow-glow">
+              <Logo className="h-7 w-7" />
+            </span>
+            <span className="hidden font-display text-sm font-medium text-white sm:block">
+              {personal.name}
+            </span>
+          </button>
 
-        <ul className="hidden md:flex items-center gap-8">
-          {links.map((link) => {
-            const isActive = active === link.toLowerCase()
-            return (
-              <li key={link}>
+          <ul className="hidden items-center gap-1 rounded-full border border-white/5 bg-white/[0.03] p-1 md:flex">
+            {navLinks.map((l) => (
+              <li key={l.id}>
                 <button
-                  onClick={() => scrollTo(link)}
-                  aria-current={isActive ? 'true' : undefined}
-                  className={`relative text-sm font-medium tracking-wide transition-colors ${
-                    isActive ? 'text-cyan-400' : 'text-slate-400 hover:text-cyan-400'
-                  }`}
+                  onClick={() => go(l.id)}
+                  aria-current={active === l.id ? 'true' : undefined}
+                  className={`relative rounded-full px-4 py-1.5 text-sm transition-colors ${active === l.id ? 'text-ink-950' : 'text-slate-400 hover:text-white'}`}
                 >
-                  {link}
-                  {isActive && (
-                    <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-cyan-400 rounded-full" />
+                  {active === l.id && (
+                    <motion.span layoutId="nav-pill" className="absolute inset-0 rounded-full bg-white" transition={{ type: 'spring', stiffness: 400, damping: 32 }} />
                   )}
-                </button>
-              </li>
-            )
-          })}
-        </ul>
-
-        <div className="hidden md:flex items-center gap-2">
-          <a
-            href={personal.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-            className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-cyan-400 hover:bg-navy-800/60 transition-colors"
-          >
-            <Github size={16} />
-          </a>
-          <a
-            href={personal.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-cyan-400 hover:bg-navy-800/60 transition-colors"
-          >
-            <Linkedin size={16} />
-          </a>
-        </div>
-
-        <button
-          className="md:hidden text-slate-300 hover:text-cyan-400 transition-colors"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </div>
-
-      {open && (
-        <div className="md:hidden bg-navy-900/98 backdrop-blur-md border-t border-slate-800">
-          <ul className="flex flex-col py-4 px-6 gap-4">
-            {links.map((link) => (
-              <li key={link}>
-                <button
-                  onClick={() => scrollTo(link)}
-                  aria-current={active === link.toLowerCase() ? 'true' : undefined}
-                  className={`w-full text-left py-1 transition-colors ${
-                    active === link.toLowerCase()
-                      ? 'text-cyan-400 font-medium'
-                      : 'text-slate-300 hover:text-cyan-400'
-                  }`}
-                >
-                  {link}
+                  <span className="relative">{l.label}</span>
                 </button>
               </li>
             ))}
-            <li className="flex items-center gap-3 pt-3 border-t border-slate-800">
-              <a href={personal.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub"
-                className="text-slate-300 hover:text-cyan-400 transition-colors">
-                <Github size={18} />
-              </a>
-              <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
-                className="text-slate-300 hover:text-cyan-400 transition-colors">
-                <Linkedin size={18} />
-              </a>
-            </li>
           </ul>
-        </div>
-      )}
-    </nav>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onOpenPalette}
+              className="hidden items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs text-slate-400 transition-colors hover:border-white/20 hover:text-white sm:flex"
+              aria-label="Open command menu"
+            >
+              <Command size={13} />
+              <kbd className="font-mono">{isMac ? '⌘' : 'Ctrl'} K</kbd>
+            </button>
+            <button onClick={() => go('contact')} className="hidden rounded-full bg-accent px-4 py-1.5 text-sm font-semibold text-ink-950 transition-colors hover:bg-white sm:block">
+              Hire me
+            </button>
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white md:hidden"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+            >
+              {open ? <X size={18} /> : <Menu size={18} />}
+            </button>
+          </div>
+        </nav>
+      </motion.header>
+
+      {/* Mobile full-screen menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ clipPath: 'circle(0% at 100% 0%)' }}
+            animate={{ clipPath: 'circle(150% at 100% 0%)' }}
+            exit={{ clipPath: 'circle(0% at 100% 0%)' }}
+            transition={{ duration: 0.6, ease: EASE }}
+            className="fixed inset-0 z-40 flex flex-col justify-between bg-ink-900 px-6 pb-10 pt-28 md:hidden"
+          >
+            <ul className="space-y-2">
+              {navLinks.map((l, i) => (
+                <motion.li key={l.id} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.05, ease: EASE, duration: 0.6 }}>
+                  <button onClick={() => go(l.id)} className="flex w-full items-baseline gap-4 py-2 text-left">
+                    <span className="font-mono text-xs text-accent">0{i + 1}</span>
+                    <span className={`font-display text-4xl font-medium ${active === l.id ? 'text-white' : 'text-slate-400'}`}>{l.label}</span>
+                  </button>
+                </motion.li>
+              ))}
+            </ul>
+            <div className="flex flex-col gap-1 text-sm text-slate-400">
+              <a href={`mailto:${personal.email}`} className="hover:text-white">{personal.email}</a>
+              <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white">LinkedIn ↗</a>
+              <a href={personal.github} target="_blank" rel="noopener noreferrer" className="hover:text-white">GitHub ↗</a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   )
 }
