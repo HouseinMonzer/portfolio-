@@ -46,8 +46,8 @@
   <g text-anchor="middle">
     
     <text x="600" y="346" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="72" font-weight="600" fill="url(#name)" letter-spacing="-1">Housein Monzer</text>
-    <text x="600" y="400" font-family="'JetBrains Mono', Consolas, monospace" font-size="28" font-weight="500" fill="#22d3ee"><tspan fill="#a78bfa">&gt;</tspan> Full-Stack Developer</text>
-    <text x="600" y="448" font-family="Inter, 'Segoe UI', sans-serif" font-size="23" font-weight="500" fill="#94a3b8" style="white-space:pre">React<tspan fill="#475569">   ·   </tspan>TypeScript<tspan fill="#475569">   ·   </tspan>Node.js<tspan fill="#475569">   ·   </tspan>PostgreSQL</text>
+    <text x="600" y="400" font-family="'JetBrains Mono', Consolas, monospace" font-size="28" font-weight="500" fill="#22d3ee"><tspan fill="#a78bfa">&gt;</tspan> Full-Stack Developer &amp; AI Visual Creator</text>
+    <text x="600" y="448" font-family="Inter, 'Segoe UI', sans-serif" font-size="23" font-weight="500" fill="#94a3b8" style="white-space:pre">Websites<tspan fill="#475569">   ·   </tspan>Web Apps<tspan fill="#475569">   ·   </tspan>AI Product Visuals<tspan fill="#475569">   ·   </tspan>Social Ads</text>
     <text x="600" y="548" font-family="'JetBrains Mono', Consolas, monospace" font-size="20" font-weight="500" fill="#64748b">houseinmonzer.vercel.app</text>
   </g>
 </svg>

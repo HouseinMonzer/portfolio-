@@ -1,7 +1,8 @@
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import { ArrowDownRight, ArrowUpRight, Download, Github, Linkedin, MapPin } from 'lucide-react'
+import { ArrowDownRight, ArrowRight, Download, Github, Linkedin, MapPin } from 'lucide-react'
 import { personal } from '../data/portfolio'
+import { discussProject } from '../lib/contactIntent'
 import { EASE, scrollToId } from '../lib/scroll'
 import { useLocalTime } from '../hooks/useLocalTime'
 import { Magnetic } from './ui/Magnetic'
@@ -147,9 +148,8 @@ export default function Hero({ ready }: { ready: boolean }) {
           {...fadeUp(1.05)}
           className="mt-6 max-w-xl text-base leading-relaxed text-slate-400 sm:text-lg"
         >
-          I design and build fast, polished web products end-to-end — from pixel-perfect React interfaces to typed
-          APIs and Postgres. Currently shipping <span className="text-white">SouQna</span>, a multi-vendor marketplace
-          for Lebanon.
+          I build fast, polished websites and web apps, and create AI-powered product imagery, ad visuals and social
+          content: from concept and creative direction to files ready for your store and social channels.
         </motion.p>
 
         <motion.div
@@ -158,18 +158,18 @@ export default function Hero({ ready }: { ready: boolean }) {
         >
           <Magnetic>
             <button onClick={() => scrollToId('projects')} className="btn-primary group shadow-glow" data-cursor="View">
-              See my work
+              View my work
               <ArrowDownRight size={16} className="transition-transform duration-300 group-hover:rotate-[-45deg]" />
             </button>
           </Magnetic>
           <Magnetic>
-            <a href={personal.cv} download className="btn-ghost">
-              <Download size={15} /> Download CV
-            </a>
+            <button onClick={() => discussProject()} className="btn-ghost group">
+              Discuss your project <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
+            </button>
           </Magnetic>
-          <button onClick={() => scrollToId('contact')} className="group inline-flex items-center gap-1.5 px-3 py-3 text-sm font-semibold text-slate-400 transition-colors hover:text-white">
-            Let's talk <ArrowUpRight size={15} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </button>
+          <a href={personal.cv} download className="inline-flex items-center gap-1.5 px-3 py-3 text-sm font-semibold text-slate-400 transition-colors hover:text-white">
+            <Download size={15} /> Download CV
+          </a>
         </motion.div>
       </motion.div>
 

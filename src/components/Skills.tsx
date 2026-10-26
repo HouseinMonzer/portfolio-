@@ -1,13 +1,13 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
-import { Code2, Database, Globe, Network, Palette, Wrench } from 'lucide-react'
+import { Camera, Code2, Database, Globe, Network, Palette, Wrench } from 'lucide-react'
 import { skillCategories, type SkillIcon } from '../data/portfolio'
 import { EASE } from '../lib/scroll'
 import { Reveal } from './ui/Reveal'
 import { SectionHeading } from './ui/SectionHeading'
 import TechSphere from './TechSphere'
 
-const icons: Record<SkillIcon, typeof Globe> = { globe: Globe, database: Database, code: Code2, palette: Palette, network: Network, wrench: Wrench }
+const icons: Record<SkillIcon, typeof Globe> = { globe: Globe, database: Database, code: Code2, palette: Palette, camera: Camera, network: Network, wrench: Wrench }
 
 const sphereTags = Array.from(new Set(skillCategories.flatMap((c) => c.skills))).slice(0, 34)
 
@@ -18,8 +18,8 @@ export default function Skills() {
   return (
     <section id="skills" className="section overflow-hidden">
       <div className="container-x">
-        <SectionHeading index="02" eyebrow="Expertise" title="A toolkit for" accent="the whole stack.">
-          From interface to infrastructure. Hover the sphere to steer it, or pick a discipline to dig in.
+        <SectionHeading index="03" eyebrow="Expertise" title="A toolkit for" accent="code and visuals.">
+          From interface to infrastructure, and from product photo to campaign. Hover the sphere to steer it, or pick a discipline to dig in.
         </SectionHeading>
 
         <div className="grid items-center gap-12 lg:grid-cols-2">

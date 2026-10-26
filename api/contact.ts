@@ -49,8 +49,8 @@ export async function POST(request: Request): Promise<Response> {
   let id: number | undefined
   if (sql) {
     const rows = (await sql`
-      INSERT INTO contact_messages (name, email, subject, message, ip_hash, user_agent)
-      VALUES (${data.name}, ${data.email}, ${data.subject}, ${data.message}, ${ipHash},
+      INSERT INTO contact_messages (name, email, service, subject, message, ip_hash, user_agent)
+      VALUES (${data.name}, ${data.email}, ${data.service}, ${data.subject}, ${data.message}, ${ipHash},
               ${(request.headers.get('user-agent') ?? '').slice(0, 300)})
       RETURNING id`) as { id: number }[]
     id = rows[0]?.id

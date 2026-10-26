@@ -13,7 +13,7 @@ export default function Experience() {
   return (
     <section id="experience" className="section">
       <div className="container-x">
-        <SectionHeading index="03" eyebrow="Experience" title="Where I've been" accent="making things.">
+        <SectionHeading index="04" eyebrow="Experience" title="Where I've been" accent="making things.">
           Agency delivery and independent client work: shipping real products for real businesses.
         </SectionHeading>
 

@@ -1,7 +1,7 @@
 export const personal = {
   name: 'Housein Monzer',
-  title: 'Full-Stack Web Developer',
-  roles: ['Full-Stack Developer', 'React + TypeScript Engineer', 'WordPress Developer'],
+  title: 'Full-Stack Developer & AI Visual Creator',
+  roles: ['Full-Stack Developer', 'AI Visual Creator', 'React + TypeScript Engineer', 'WordPress Developer'],
   location: 'Lebanon',
   email: 'houseinmonzer@proton.me',
   phone: '+961 81 960 352',
@@ -9,10 +9,10 @@ export const personal = {
   github: 'https://github.com/HouseinMonzer',
   cv: '/Housein_Monzer_CV.pdf',
   summary:
-    'Computer Science graduate building production web applications with React, TypeScript, and PostgreSQL. Currently shipping SouQna, a multi-vendor marketplace for Lebanon. Two years of WordPress development at Synctale and a working foundation in IT support and networking from hands-on practice and Google certifications.',
+    'Computer Science graduate building production web applications with React, TypeScript and PostgreSQL, and creating AI-powered product imagery, ad visuals and social content for online stores and brands. Currently shipping SouQna, a multi-vendor marketplace for Lebanon, after two years of WordPress development at Synctale.',
 }
 
-export type SkillIcon = 'globe' | 'database' | 'code' | 'palette' | 'network' | 'wrench'
+export type SkillIcon = 'globe' | 'database' | 'code' | 'palette' | 'camera' | 'network' | 'wrench'
 
 export const skillCategories: { title: string; icon: SkillIcon; skills: string[] }[] = [
   {
@@ -36,6 +36,11 @@ export const skillCategories: { title: string; icon: SkillIcon; skills: string[]
     skills: ['Figma', 'Canva', 'Responsive Design'],
   },
   {
+    title: 'AI Visuals & Creative',
+    icon: 'camera',
+    skills: ['AI Product Imagery', 'Creative Direction', 'Storyboarding', 'Video Prompts (JSON)', 'Photo Retouching', 'Print Layout'],
+  },
+  {
     title: 'Networking & Systems',
     icon: 'network',
     skills: ['TCP/IP', 'DNS', 'DHCP', 'LAN/WAN', 'VLANs', 'Router & Switch Config'],
@@ -49,13 +54,14 @@ export const skillCategories: { title: string; icon: SkillIcon; skills: string[]
 
 export const experience = [
   {
-    role: 'Freelance Web Developer',
+    role: 'Freelance Developer & AI Visual Creator',
     company: 'Self-employed',
     location: 'Lebanon',
     period: 'July 2024 – Present',
     bullets: [
       'Delivered alitheinsurer.com — a trilingual (EN/AR/FR) marketing site for a licensed insurance consultant, from design to production on Vercel.',
       'Building SouQna, a multi-vendor marketplace for Lebanon: React + TypeScript front end, Node.js/Prisma/Neon Postgres backend, JWT auth.',
+      'Creating AI product imagery, social media campaigns and video storyboards for online stores and brands.',
       'Handling the full project cycle solo: client requirements, UI/UX, development, deployment, and post-launch support.',
     ],
   },
@@ -177,9 +183,21 @@ export const stats = [
 
 export const navLinks = [
   { id: 'about', label: 'About' },
+  { id: 'services', label: 'Services' },
+  { id: 'projects', label: 'Web Work' },
+  { id: 'visuals', label: 'Visuals' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'contact', label: 'Contact' },
+]
+
+/** Every section in page order (the command palette lists all of them). */
+export const sectionLinks = [
+  { id: 'about', label: 'About' },
+  { id: 'services', label: 'Services' },
   { id: 'skills', label: 'Skills' },
   { id: 'experience', label: 'Experience' },
-  { id: 'projects', label: 'Work' },
+  { id: 'projects', label: 'Web Work' },
+  { id: 'visuals', label: 'Visual Work' },
   { id: 'education', label: 'Education' },
   { id: 'contact', label: 'Contact' },
 ]

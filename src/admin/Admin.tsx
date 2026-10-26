@@ -2,8 +2,9 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react'
 import { ArrowLeft, Eye, Inbox, Loader2, LogOut, Mail, MailOpen, RefreshCw, Search, ShieldCheck, Trash2 } from 'lucide-react'
 import { Logo } from '../components/ui/Logo'
+import { serviceLabel } from '../../shared/services'
 
-type Message = { id: number; name: string; email: string; subject: string; message: string; is_read: boolean; created_at: string }
+type Message = { id: number; name: string; email: string; service?: string; subject: string; message: string; is_read: boolean; created_at: string }
 type Stats = { total: number; unread: number; week: number; views: number; views_week: number }
 type Payload = { messages: Message[]; stats: Stats; daily: { day: string; count: number }[] }
 type Health = { services: Record<string, boolean> }
@@ -101,7 +102,7 @@ export default function Admin() {
 
   const visible = useMemo(() => {
     const q = query.toLowerCase()
-    return (data?.messages ?? []).filter((m) => (filter === 'all' || !m.is_read) && (!q || `${m.name} ${m.email} ${m.subject} ${m.message}`.toLowerCase().includes(q)))
+    return (data?.messages ?? []).filter((m) => (filter === 'all' || !m.is_read) && (!q || `${m.name} ${m.email} ${serviceLabel(m.service)} ${m.subject} ${m.message}`.toLowerCase().includes(q)))
   }, [data, filter, query])
 
   if (!token) return <Login onToken={setToken} health={health} />
@@ -215,7 +216,10 @@ export default function Admin() {
                         <span className={`truncate ${m.is_read ? 'text-slate-300' : 'font-semibold text-white'}`}>{m.name}</span>
                         <span className="shrink-0 text-xs text-slate-500">{new Date(m.created_at).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}</span>
                       </span>
-                      <span className="block truncate text-sm text-slate-500">{m.subject || m.message}</span>
+                      <span className="flex items-center gap-2 text-sm text-slate-500">
+                        {m.service && <span className="chip shrink-0 !py-0.5 !text-[11px]">{serviceLabel(m.service) || m.service}</span>}
+                        <span className="truncate">{m.subject || m.message}</span>
+                      </span>
                     </span>
                   </button>
                   <AnimatePresence initial={false}>

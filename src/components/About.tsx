@@ -1,4 +1,4 @@
-import { ArrowUpRight, Code2, Gauge, Layers, MapPin, Sparkles } from 'lucide-react'
+import { ArrowUpRight, Camera, Code2, Gauge, Layers, MapPin, Sparkles } from 'lucide-react'
 import { personal, projects, stats } from '../data/portfolio'
 import { useLocalTime } from '../hooks/useLocalTime'
 import { Counter } from './ui/Counter'
@@ -10,6 +10,7 @@ const principles = [
   { icon: Layers, title: 'Full-stack ownership', desc: 'Requirements → UI/UX → API → database → deploy. One person, no hand-off gaps.' },
   { icon: Gauge, title: 'Performance first', desc: 'Lean bundles, optimized media and SEO-ready markup that load fast on real networks.' },
   { icon: Code2, title: 'Typed & maintainable', desc: 'TypeScript end-to-end, validated inputs and clean components that are easy to extend.' },
+  { icon: Camera, title: 'True to the product', desc: 'AI visuals that keep shape, color, logos and labels faithful, checked against your reference photos.' },
 ]
 
 export default function About() {
@@ -19,7 +20,7 @@ export default function About() {
   return (
     <section id="about" className="section">
       <div className="container-x">
-        <SectionHeading index="01" eyebrow="About" title="Engineer by training," accent="builder by obsession.">
+        <SectionHeading index="01" eyebrow="About" title="Developer by training," accent="creator by obsession.">
           {personal.summary}
         </SectionHeading>
 
@@ -104,7 +105,7 @@ export default function About() {
 
           {/* Principles */}
           <Reveal delay={0.1} className="lg:col-span-12">
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               {principles.map(({ icon: Icon, title, desc }) => (
                 <div key={title} className="glass group p-6 transition-colors duration-500 hover:border-accent/20">
                   <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-accent/20 bg-accent/10 text-accent transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110">

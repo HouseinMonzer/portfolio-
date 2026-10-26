@@ -29,6 +29,8 @@ export async function db(): Promise<NeonQueryFunction<false, false> | null> {
           is_read     BOOLEAN     NOT NULL DEFAULT FALSE,
           created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )`
+      // Added with the services section; older databases get the column on next start.
+      await q`ALTER TABLE contact_messages ADD COLUMN IF NOT EXISTS service TEXT NOT NULL DEFAULT ''`
       await q`CREATE INDEX IF NOT EXISTS contact_messages_ip_time ON contact_messages (ip_hash, created_at DESC)`
       await q`
         CREATE TABLE IF NOT EXISTS page_views (

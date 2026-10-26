@@ -1,7 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
-import { ArrowRight, Copy, CornerDownLeft, Download, Github, Hash, Linkedin, Mail, Search, type LucideIcon } from 'lucide-react'
-import { navLinks, personal } from '../data/portfolio'
+import { ArrowRight, Copy, CornerDownLeft, Download, Github, Hash, Linkedin, Mail, MessageSquare, Search, type LucideIcon } from 'lucide-react'
+import { personal, sectionLinks } from '../data/portfolio'
+import { discussProject } from '../lib/contactIntent'
 import { lockScroll, scrollToId } from '../lib/scroll'
 
 type Action = { id: string; label: string; group: string; icon: LucideIcon; hint?: string; run: () => void }
@@ -15,7 +16,8 @@ export default function CommandPalette({ open, onClose }: { open: boolean; onClo
 
   const actions = useMemo<Action[]>(
     () => [
-      ...navLinks.map((l) => ({ id: `go-${l.id}`, label: `Go to ${l.label}`, group: 'Navigate', icon: Hash, run: () => scrollToId(l.id) })),
+      ...sectionLinks.map((l) => ({ id: `go-${l.id}`, label: `Go to ${l.label}`, group: 'Navigate', icon: Hash, run: () => scrollToId(l.id) })),
+      { id: 'discuss', label: 'Discuss a project', group: 'Actions', icon: MessageSquare, run: () => discussProject() },
       {
         id: 'copy-email',
         label: 'Copy email address',

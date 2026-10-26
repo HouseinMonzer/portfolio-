@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 
-const items = ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Prisma', 'Three.js', 'TailwindCSS', 'Framer Motion', 'WordPress', 'Vercel', 'REST APIs', 'Figma']
+const items = ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'AI Product Photography', 'Three.js', 'Social Media Ads', 'TailwindCSS', 'Shopify Visuals', 'WordPress', 'Storyboards', 'Figma']
 
 /** Two counter-scrolling bands of the stack, skewed by scroll position. */
 export default function Marquee() {

@@ -1,4 +1,5 @@
 import type { ContactData, ContactResponse } from '../../shared/contact'
+import { serviceLabel } from '../../shared/services'
 
 /**
  * Sends the contact form to the backend (/api/contact). If the backend is not
@@ -32,7 +33,7 @@ async function sendViaEmailJs(data: ContactData): Promise<ContactResponse> {
   }
   try {
     const { default: emailjs } = await import('@emailjs/browser')
-    const params = { from_name: data.name, from_email: data.email, subject: data.subject, message: data.message, to_name: 'Housein' }
+    const params = { from_name: data.name, from_email: data.email, service: serviceLabel(data.service), subject: data.subject, message: data.message, to_name: 'Housein' }
     // Owner notification only. No auto-reply from the browser: it would let anyone use these
     // public keys to email arbitrary addresses, bypassing the server's validation and rate limit.
     await emailjs.send(service, template, params, key)

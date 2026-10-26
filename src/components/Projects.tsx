@@ -84,7 +84,7 @@ export default function Projects() {
   return (
     <section id="projects" className="section">
       <div className="container-x">
-        <SectionHeading index="04" eyebrow="Selected work" title="Products I've" accent="designed & shipped.">
+        <SectionHeading index="05" eyebrow="Web work" title="Products I've" accent="designed & shipped.">
           A mix of full-stack products and client websites: each one live, in production, used by real people.
         </SectionHeading>
 

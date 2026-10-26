@@ -5,6 +5,7 @@ export type AdminMessage = {
   id: number
   name: string
   email: string
+  service: string
   subject: string
   message: string
   is_read: boolean
@@ -23,7 +24,7 @@ export async function GET(request: Request): Promise<Response> {
   if (sql instanceof Response) return sql
 
   const messages = (await sql`
-    SELECT id, name, email, subject, message, is_read, created_at
+    SELECT id, name, email, service, subject, message, is_read, created_at
     FROM contact_messages ORDER BY created_at DESC LIMIT 200`) as AdminMessage[]
   const [stats] = (await sql`
     SELECT

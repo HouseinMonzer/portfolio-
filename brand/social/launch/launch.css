@@ -1,0 +1,79 @@
+/* Shared styles for the "new design" launch visuals (story + LinkedIn). Rendered by build-launch.mjs. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+  --bg: #04060b;
+  --ink: #0a0e19;
+  --line: #161d31;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --cyan: #22d3ee;
+  --sky: #38bdf8;
+  --violet: #a78bfa;
+}
+
+* { box-sizing: border-box; margin: 0; }
+html, body { background: var(--bg); overflow: hidden; }
+
+.canvas {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 40% at 80% 45%, rgba(34, 211, 238, 0.14), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 15% 95%, rgba(139, 92, 246, 0.16), transparent 70%),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, sans-serif;
+}
+.canvas::before { /* dot grid */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, #161d31 1.6px, transparent 1.7px);
+  background-size: 36px 36px;
+  opacity: 0.8;
+}
+.layer { position: absolute; }
+
+.brand { display: flex; align-items: center; gap: 18px; font: 500 22px 'JetBrains Mono', monospace; letter-spacing: 0.32em; color: var(--muted); text-transform: uppercase; }
+.brand svg { width: 56px; height: 56px; }
+.tag { font: 500 20px 'JetBrains Mono', monospace; letter-spacing: 0.2em; color: var(--cyan); border: 1.5px solid rgba(34, 211, 238, 0.35); border-radius: 999px; padding: 10px 20px; text-transform: uppercase; }
+
+.headline { font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.045em; line-height: 0.92; }
+.grad { background: linear-gradient(90deg, var(--cyan), var(--sky) 45%, var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.sub { color: #cbd5e1; line-height: 1.35; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* Feature rows */
+.feat { display: flex; gap: 22px; align-items: flex-start; }
+.feat .ico { flex: none; width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; background: rgba(34, 211, 238, 0.1); border: 1.5px solid rgba(34, 211, 238, 0.25); color: var(--cyan); }
+.feat .ico svg { width: 30px; height: 30px; }
+.feat b { display: block; font: 600 34px 'Space Grotesk', sans-serif; letter-spacing: -0.02em; color: var(--text); }
+.feat span { display: block; margin-top: 6px; font-size: 24px; line-height: 1.35; color: var(--muted); }
+
+/* CTA pill */
+.cta { display: inline-flex; align-items: center; gap: 16px; padding: 22px 32px; border-radius: 999px; background: var(--cyan); color: #04060b; font: 600 28px Inter, sans-serif; box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.4), 0 24px 70px -18px rgba(34, 211, 238, 0.75); }
+.url { font: 500 24px 'JetBrains Mono', monospace; color: var(--muted); }
+.url i { font-style: normal; color: var(--cyan); }
+
+/* Phone mockup: screenshot is the 390-CSS-px site captured at 3x inside a 520px-wide frame,
+   so the first 75% of its width is the page. */
+.phone { border-radius: 64px; padding: 14px; background: linear-gradient(145deg, #2a3452, #0e1322 40%, #1e2740); box-shadow: 0 0 0 2px #2a3452, 0 60px 120px -30px rgba(0, 0, 0, 0.9), 0 0 120px -20px rgba(34, 211, 238, 0.35); }
+.phone .screen { position: relative; overflow: hidden; border-radius: 52px; background: #04060b; aspect-ratio: 390 / 844; }
+.phone .screen img { position: absolute; left: 0; top: 0; width: 133.333%; height: auto; }
+.phone .notch { position: absolute; left: 50%; top: 16px; width: 30%; height: 30px; transform: translateX(-50%); border-radius: 20px; background: #000; z-index: 2; }
+/* The live hero rotates "I'm a ___"; headless capture caught it between words, so draw the real first line. */
+.phone .role { position: absolute; left: 18.2%; top: 44.4%; font: 500 5.13cqw/1 'Space Grotesk', sans-serif; white-space: nowrap; background: linear-gradient(90deg, var(--cyan), var(--sky)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.phone .screen { container-type: inline-size; }
+
+/* Browser mockup */
+.browser { border-radius: 26px; overflow: hidden; background: var(--ink); border: 1.5px solid #222b45; box-shadow: 0 50px 120px -40px rgba(0, 0, 0, 0.95), 0 0 140px -40px rgba(34, 211, 238, 0.35); }
+.browser .bar { display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 22px; border-bottom: 1px solid var(--line); }
+.browser .bar i { width: 13px; height: 13px; border-radius: 50%; background: #222b45; }
+.browser .bar .addr { margin-left: 18px; flex: 1; max-width: 440px; height: 30px; border-radius: 9px; background: rgba(255, 255, 255, 0.04); display: flex; align-items: center; padding: 0 14px; font: 500 15px 'JetBrains Mono', monospace; color: var(--muted); }
+.browser img { display: block; width: 100%; height: auto; }
+
+.trace { fill: none; stroke: #1e2740; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.trace.lit { stroke: url(#lit); opacity: 0.9; filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.7)); }
+.node { fill: var(--bg); stroke: #2a3452; stroke-width: 4; }
+.node.lit { stroke: var(--cyan); }

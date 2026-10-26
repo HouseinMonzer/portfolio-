@@ -1,10 +1,13 @@
 import { z } from 'zod'
+import { SERVICE_IDS } from './services.js'
 
 // Single source of truth for the contact form — used by the React form for
 // instant field errors AND by /api/contact so the server never trusts the client.
 export const contactSchema = z.object({
   name: z.string().trim().min(2, 'Please enter your name').max(80, 'Name is too long'),
   email: z.string().trim().toLowerCase().email('Please enter a valid email').max(160),
+  // Optional: general enquiries can leave it empty.
+  service: z.union([z.enum(SERVICE_IDS), z.literal('')], { error: 'Please pick a service from the list' }).optional().default(''),
   subject: z.string().trim().max(120).optional().default(''),
   message: z
     .string()
@@ -15,10 +18,9 @@ export const contactSchema = z.object({
   website: z.string().max(0).optional().default(''),
 })
 
-export type ContactInput = z.input<typeof contactSchema>
 export type ContactData = z.output<typeof contactSchema>
 
-export type FieldErrors = Partial<Record<'name' | 'email' | 'subject' | 'message', string>>
+export type FieldErrors = Partial<Record<'name' | 'email' | 'service' | 'subject' | 'message', string>>
 
 export function fieldErrors(error: z.ZodError): FieldErrors {
   const out: FieldErrors = {}

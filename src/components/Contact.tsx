@@ -1,15 +1,18 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState, type FormEvent, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { AlertCircle, ArrowUpRight, Check, Copy, Linkedin, Loader2, Mail, Phone, Send } from 'lucide-react'
 import { contactSchema, fieldErrors, type FieldErrors } from '../../shared/contact'
+import { SERVICE_OPTIONS } from '../../shared/services'
 import { personal } from '../data/portfolio'
 import { submitContact } from '../lib/api'
+import { onDiscussProject } from '../lib/contactIntent'
 import { EASE } from '../lib/scroll'
 import { Magnetic } from './ui/Magnetic'
 import { Reveal, SplitWords } from './ui/Reveal'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
-const empty = { name: '', email: '', subject: '', message: '', website: '' }
+const empty = { name: '', email: '', service: '', subject: '', message: '', website: '' }
+const serviceGroups = [...new Set(SERVICE_OPTIONS.map((s) => s.group))]
 
 export default function Contact() {
   const [form, setForm] = useState(empty)
@@ -18,6 +21,20 @@ export default function Contact() {
   const [status, setStatus] = useState<Status>('idle')
   const [serverError, setServerError] = useState('')
   const [copied, setCopied] = useState(false)
+  const serviceRef = useRef<HTMLSelectElement>(null)
+  const messageRef = useRef<HTMLTextAreaElement>(null)
+
+  // "Discuss this" buttons elsewhere on the page preselect a service, then focus the next field
+  // once the smooth scroll has landed.
+  useEffect(
+    () =>
+      onDiscussProject((service) => {
+        setStatus((s) => (s === 'success' ? 'idle' : s))
+        if (service) setForm((f) => ({ ...f, service }))
+        setTimeout(() => (service ? messageRef : serviceRef).current?.focus({ preventScroll: true }), 1500)
+      }),
+    [],
+  )
 
   const validate = (next = form) => {
     const r = contactSchema.safeParse(next)
@@ -77,17 +94,17 @@ export default function Contact() {
           {/* Pitch */}
           <div className="lg:col-span-5">
             <Reveal y={16}>
-              <p className="eyebrow mb-6"><span className="text-slate-500">06</span><span className="h-px w-10 bg-accent/50" />Contact</p>
+              <p className="eyebrow mb-6"><span className="text-slate-500">08</span><span className="h-px w-10 bg-accent/50" />Contact</p>
             </Reveal>
             <h2 className="font-display text-5xl font-semibold leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
-              <SplitWords text="Let's build" />
+              <SplitWords text="Let's make" />
               <br />
               <SplitWords text="something great." className="text-gradient" delay={0.15} />
             </h2>
             <Reveal delay={0.2}>
               <p className="mt-8 max-w-md text-lg leading-relaxed text-slate-400">
-                Have a product idea, a website that needs a rebuild, or a role to fill? Tell me about it. I usually reply
-                within 24 hours.
+                Need a website, product visuals for your store, a campaign for social media, or have a role to fill? Tell
+                me about it. I usually reply within 24 hours.
               </p>
             </Reveal>
 
@@ -141,7 +158,7 @@ export default function Contact() {
                       <Check size={36} strokeWidth={2.5} />
                     </motion.span>
                     <h3 className="mt-8 font-display text-3xl font-semibold text-white">Message received!</h3>
-                    <p className="mt-3 max-w-sm text-slate-400">Thanks for reaching out. I'll get back to you within 24–48 hours.</p>
+                    <p className="mt-3 max-w-sm text-slate-400">Thanks for reaching out. I'll get back to you within 24 hours.</p>
                     <button onClick={() => setStatus('idle')} className="btn-ghost mt-8">Send another message</button>
                   </motion.div>
                 ) : (
@@ -162,12 +179,23 @@ export default function Contact() {
                       </Field>
                     </div>
 
-                    <Field id="subject" label="Subject" optional error={err('subject')}>
-                      <input id="subject" className="field" placeholder="New website, freelance project, job opportunity…" value={form.subject} onChange={(e) => update('subject', e.target.value)} onBlur={() => blur('subject')} />
+                    <Field id="service" label="What do you need?" optional error={err('service')}>
+                      <select id="service" ref={serviceRef} className="field [&>optgroup]:bg-ink-900 [&_option]:bg-ink-900" value={form.service} onChange={(e) => update('service', e.target.value)} onBlur={() => blur('service')}>
+                        <option value="">Choose a service</option>
+                        {serviceGroups.map((g) => (
+                          <optgroup key={g} label={g}>
+                            {SERVICE_OPTIONS.filter((s) => s.group === g).map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
+                          </optgroup>
+                        ))}
+                      </select>
                     </Field>
 
-                    <Field id="message" label="Message" error={err('message')} hint={form.message ? `${remaining} left` : undefined}>
-                      <textarea id="message" rows={6} className="field resize-none" placeholder="Tell me about your project, timeline and budget…" value={form.message} onChange={(e) => update('message', e.target.value)} onBlur={() => blur('message')} maxLength={4000} aria-invalid={!!err('message')} aria-describedby={err('message') ? 'message-error' : undefined} data-lenis-prevent />
+                    <Field id="subject" label="Subject" optional error={err('subject')}>
+                      <input id="subject" className="field" placeholder="Product shoot, new website, job opportunity…" value={form.subject} onChange={(e) => update('subject', e.target.value)} onBlur={() => blur('subject')} />
+                    </Field>
+
+                    <Field id="message" label="Project details" error={err('message')} hint={form.message ? `${remaining} left` : undefined}>
+                      <textarea id="message" ref={messageRef} rows={6} className="field resize-none" placeholder="What you need, for which product or brand, sizes or platforms, timeline and budget…" value={form.message} onChange={(e) => update('message', e.target.value)} onBlur={() => blur('message')} maxLength={4000} aria-invalid={!!err('message')} aria-describedby={err('message') ? 'message-error' : undefined} data-lenis-prevent />
                     </Field>
 
                     <div role="alert" aria-live="assertive">

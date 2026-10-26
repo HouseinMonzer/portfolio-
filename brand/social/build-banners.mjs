@@ -45,6 +45,8 @@ const banners = [
   {
     // Open Graph / Twitter share image. Centered so square crops (WhatsApp, Slack) keep the name.
     file: 'og-image', w: 1200, h: 630, out: join(here, '..', '..', 'public'),
+    role: 'Full-Stack Developer & AI Visual Creator',
+    skills: ['Websites', 'Web Apps', 'AI Product Visuals', 'Social Ads'],
     text: { x: 600, label: null, name: 346, role: 400, skills: 448, url: 548, sizes: [0, 72, 28, 23, 20], anchor: 'middle' },
     mark: { x: 600, y: 166, s: 0.27 },
     glows: [{ x: 600, y: 260, r: 460, c: '#22d3ee', o: 0.15 }, { x: 600, y: 700, r: 480, c: '#8b5cf6', o: 0.15 }],
@@ -119,8 +121,8 @@ function svgFor(b) {
   <g text-anchor="${t.anchor}">
     ${t.label ? `<text x="${t.x}" y="${t.label}" font-family="'JetBrains Mono', Consolas, monospace" font-size="${labelSize}" font-weight="500" fill="#64748b">// hello, I'm</text>` : ''}
     <text x="${t.x}" y="${t.name}" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="${nameSize}" font-weight="600" fill="url(#name)" letter-spacing="-1">Housein Monzer</text>
-    <text x="${t.x}" y="${t.role}" font-family="'JetBrains Mono', Consolas, monospace" font-size="${roleSize}" font-weight="500" fill="#22d3ee"><tspan fill="#a78bfa">&gt;</tspan> Full-Stack Developer</text>
-    <text x="${t.x}" y="${t.skills}" font-family="Inter, 'Segoe UI', sans-serif" font-size="${skillSize}" font-weight="500" fill="#94a3b8" style="white-space:pre">React${sep}TypeScript${sep}Node.js${sep}PostgreSQL</text>
+    <text x="${t.x}" y="${t.role}" font-family="'JetBrains Mono', Consolas, monospace" font-size="${roleSize}" font-weight="500" fill="#22d3ee"><tspan fill="#a78bfa">&gt;</tspan> ${(b.role ?? 'Full-Stack Developer').replace(/&/g, '&amp;')}</text>
+    <text x="${t.x}" y="${t.skills}" font-family="Inter, 'Segoe UI', sans-serif" font-size="${skillSize}" font-weight="500" fill="#94a3b8" style="white-space:pre">${(b.skills ?? ['React', 'TypeScript', 'Node.js', 'PostgreSQL']).join(sep)}</text>
     ${t.url ? `<text x="${t.x}" y="${t.url}" font-family="'JetBrains Mono', Consolas, monospace" font-size="${urlSize}" font-weight="500" fill="#64748b">houseinmonzer.vercel.app</text>` : ''}
   </g>
 </svg>`

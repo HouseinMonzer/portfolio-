@@ -1,4 +1,5 @@
 import type { ContactData } from '../../shared/contact.js'
+import { serviceLabel } from '../../shared/services.js'
 
 const env = (...keys: string[]) => keys.map((k) => process.env[k]).find(Boolean) ?? ''
 
@@ -33,7 +34,8 @@ async function resend(data: ContactData) {
       body: JSON.stringify(payload),
     })
 
-  const subject = data.subject || `New message from ${data.name}`
+  const service = serviceLabel(data.service)
+  const subject = data.subject || (service ? `${service} request from ${data.name}` : `New message from ${data.name}`)
   const res = await send({
     from,
     to: [to],
@@ -43,6 +45,7 @@ async function resend(data: ContactData) {
       <div style="font-family:system-ui,sans-serif;max-width:560px">
         <h2 style="margin:0 0 12px">New portfolio message</h2>
         <p><b>From:</b> ${escapeHtml(data.name)} &lt;${escapeHtml(data.email)}&gt;</p>
+        ${service ? `<p><b>Service:</b> ${escapeHtml(service)}</p>` : ''}
         ${data.subject ? `<p><b>Subject:</b> ${escapeHtml(data.subject)}</p>` : ''}
         <div style="padding:16px;background:#f4f6fa;border-radius:12px;white-space:pre-wrap">${escapeHtml(data.message)}</div>
       </div>`,
@@ -73,6 +76,7 @@ async function emailjs(data: ContactData) {
       template_params: {
         from_name: data.name,
         from_email: data.email,
+        service: serviceLabel(data.service),
         subject: data.subject,
         message: data.message,
         to_name: 'Housein',
@@ -87,7 +91,8 @@ export function notifyWhatsApp(data: ContactData): Promise<void> {
   const key = env('CALLMEBOT_KEY')
   const phone = env('CALLMEBOT_PHONE') || '96181960352'
   if (!key) return Promise.resolve()
-  const text = encodeURIComponent(`📬 New portfolio message\n\nFrom: ${data.name}\nEmail: ${data.email}\n\n${data.message.slice(0, 250)}`)
+  const service = serviceLabel(data.service)
+  const text = encodeURIComponent(`📬 New portfolio message\n\nFrom: ${data.name}\nEmail: ${data.email}${service ? `\nService: ${service}` : ''}\n\n${data.message.slice(0, 250)}`)
   return fetch(`https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${key}`)
     .then(() => undefined)
     .catch(() => undefined)
