@@ -18,11 +18,11 @@ function ProjectCard({ p, onOpen }: { p: VisualProject; onOpen: () => void }) {
   const cover = p.media[0]
   const src = cover.kind === 'video' ? cover.poster : cover.src
   return (
-    <article className="glass group mb-5 break-inside-avoid overflow-hidden p-2">
+    <article className="glass group flex h-full flex-col overflow-hidden p-2">
       <button
         onClick={onOpen}
         aria-label={`View ${p.title}: ${mediaCount(p)}`}
-        className="relative block w-full overflow-hidden rounded-[1.25rem] bg-ink-800"
+        className="relative block aspect-[4/5] w-full overflow-hidden rounded-[1.25rem] bg-ink-800"
         data-cursor="View"
       >
         <img
@@ -32,13 +32,13 @@ function ProjectCard({ p, onOpen }: { p: VisualProject; onOpen: () => void }) {
           height={cover.height}
           loading="lazy"
           decoding="async"
-          className="h-auto w-full transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03]"
         />
         <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-ink-950/70 text-white opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden>
           {cover.kind === 'video' ? <Play size={15} /> : <Expand size={15} />}
         </span>
       </button>
-      <div className="px-3 pb-3 pt-4">
+      <div className="flex flex-1 flex-col px-3 pb-3 pt-4">
         <div className="flex flex-wrap items-center gap-2 text-xs">
           <span className="rounded-full border border-accent/30 bg-accent/10 px-2.5 py-1 font-mono text-accent-soft">{p.deliverable}</span>
           <span className="text-slate-400">{categoryLabels[p.category]}</span>
@@ -57,7 +57,7 @@ function ProjectCard({ p, onOpen }: { p: VisualProject; onOpen: () => void }) {
           </p>
         )}
         <p className="mt-2 text-sm leading-relaxed text-slate-400">{p.description}</p>
-        <p className="mt-3 inline-flex items-center gap-1.5 font-mono text-xs text-slate-400">
+        <p className="mt-auto inline-flex items-center gap-1.5 pt-3 font-mono text-xs text-slate-400">
           <Images size={13} aria-hidden /> {mediaCount(p)}
         </p>
       </div>
@@ -79,7 +79,6 @@ export default function VisualWork() {
 
   const shown = filter === 'all' ? publishedVisuals : publishedVisuals.filter((p) => p.category === filter)
   const openProject = publishedVisuals.find((p) => p.id === openId)
-  const cols = shown.length >= 3 ? 'sm:columns-2 lg:columns-3' : 'sm:columns-2'
 
   if (publishedVisuals.length === 0) return null
 
@@ -110,7 +109,8 @@ export default function VisualWork() {
           </Reveal>
         )}
 
-        <div className={`columns-1 gap-5 ${cols}`}>
+        {/* Row-by-row grid; covers share one 4:5 frame (object-contain, never cropped) so rows line up. */}
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {shown.map((p) => (
             <ProjectCard
               key={p.id}
