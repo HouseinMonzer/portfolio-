@@ -28,9 +28,9 @@ export default function Contact() {
   // once the smooth scroll has landed.
   useEffect(
     () =>
-      onDiscussProject((service) => {
+      onDiscussProject(({ service, note }) => {
         setStatus((s) => (s === 'success' ? 'idle' : s))
-        if (service) setForm((f) => ({ ...f, service }))
+        setForm((f) => ({ ...f, service: service || f.service, subject: f.subject || note }))
         setTimeout(() => (service ? messageRef : serviceRef).current?.focus({ preventScroll: true }), 1500)
       }),
     [],
@@ -94,7 +94,7 @@ export default function Contact() {
           {/* Pitch */}
           <div className="lg:col-span-5">
             <Reveal y={16}>
-              <p className="eyebrow mb-6"><span className="text-slate-500">08</span><span className="h-px w-10 bg-accent/50" />Contact</p>
+              <p className="eyebrow mb-6"><span className="text-slate-500">09</span><span className="h-px w-10 bg-accent/50" />Contact</p>
             </Reveal>
             <h2 className="font-display text-5xl font-semibold leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
               <SplitWords text="Let's make" />

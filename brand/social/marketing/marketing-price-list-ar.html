@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../launch/launch.css">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  .canvas { width: 1080px; height: 1350px; }
+  .ar, .ar * { font-family: Cairo, 'Segoe UI', sans-serif !important; letter-spacing: 0 !important; }
+  .frame { position: absolute; overflow: hidden; border-radius: 28px; border: 1.5px solid #222b45; background: #0e1322; box-shadow: 0 40px 90px -30px rgba(0,0,0,.9), 0 0 80px -30px rgba(34,211,238,.35); }
+  .frame img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .price-chip { display: inline-flex; align-items: baseline; gap: 10px; padding: 14px 24px; border-radius: 999px; border: 1.5px solid rgba(34,211,238,.4); background: rgba(34,211,238,.08); color: #e0fbff; font: 600 26px Inter, sans-serif; }
+  .price-chip b { font: 700 40px 'Space Grotesk', sans-serif; color: #fff; }
+  .bul { display: grid; gap: 18px; font-size: 28px; color: #cbd5e1; }
+  .bul div { display: flex; gap: 16px; align-items: flex-start; }
+  .bul div::before { content: ''; flex: none; width: 12px; height: 12px; margin-top: 12px; border-radius: 50%; background: linear-gradient(135deg, #22d3ee, #a78bfa); }
+  .client { font: 500 20px 'JetBrains Mono', monospace; color: #64748b; }
+  
+    .list { position: absolute; left: 60px; right: 60px; top: 330px; display: grid; gap: 12px; }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 13px 28px; border-radius: 20px; border: 1.5px solid #161d31; background: rgba(10,14,25,.85); }
+    .row b, .row span { line-height: 1.25; }
+    .row.hl { border-color: rgba(34,211,238,.55); background: rgba(34,211,238,.07); box-shadow: 0 0 60px -20px rgba(34,211,238,.6); }
+    .row b { display: block; font: 600 29px 'Space Grotesk', sans-serif; color: #f1f5f9; letter-spacing: -.01em; }
+    .row span { display: block; margin-top: 2px; font-size: 19px; color: #94a3b8; }
+    .pr { flex: none; display: flex; align-items: baseline; gap: 10px; font: 700 44px 'Space Grotesk', sans-serif; color: #fff; }
+    .pr small { font: 500 18px Inter, sans-serif; color: #94a3b8; text-transform: uppercase; letter-spacing: .08em; }
+    .ar .pr small { text-transform: none; font-size: 20px; }
+    .ar .list { top: 318px; gap: 9px; }
+    .ar .row { padding: 9px 28px; }
+    .ar .row b { font-size: 26px; }
+    .ar .row span { font-size: 17px; margin-top: 0; }
+</style></head><body><div class="canvas ar"><div class="layer brand" style="right:60px; top:60px; direction:ltr"><svg viewBox="0 0 64 64" fill="none"><defs><linearGradient id="lg" x1="4" y1="6" x2="60" y2="58" gradientUnits="userSpaceOnUse"><stop stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs><path d="M8 10v44M22.5 10v44M8 32h14.5M37 54V10l9.5 9.5L56 10v44" stroke="url(#lg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><g fill="#04060b" stroke="url(#lg)" stroke-width="2.6"><circle cx="8" cy="10" r="3.8"/><circle cx="8" cy="54" r="3.8"/><circle cx="22.5" cy="10" r="3.8"/><circle cx="22.5" cy="54" r="3.8"/><circle cx="37" cy="54" r="3.8"/><circle cx="56" cy="54" r="3.8"/></g><g fill="#e2e8f0"><circle cx="8" cy="32" r="2.4"/><circle cx="22.5" cy="32" r="2.4"/><circle cx="46.5" cy="19.5" r="2.4"/></g></svg> Housein Monzer</div><h1 class="layer headline" style="right:60px; top:120px; font-size:74px; line-height:1.15">قائمة الأسعار<br><span class="grad" style="font-size:44px">محتوى بصري بالذكاء الاصطناعي</span></h1><div class="list"><div class="row">
+        <div><b>صور منتجات</b><span><bdi>3</bdi> صور</span></div>
+        <div class="pr"><small>يبدأ من</small><bdi>7$</bdi></div>
+      </div><div class="row hl">
+        <div><b>مجموعة صور للمتجر</b><span><bdi>5</bdi> صور للمنتج</span></div>
+        <div class="pr"><small>يبدأ من</small><bdi>11$</bdi></div>
+      </div><div class="row">
+        <div><b>بوست أو إعلان</b><span>للتصميم</span></div>
+        <div class="pr"><small>يبدأ من</small><bdi>3$</bdi></div>
+      </div><div class="row">
+        <div><b>باقة سوشال شهرية</b><span>بالشهر</span></div>
+        <div class="pr"><small>يبدأ من</small><bdi>65$</bdi></div>
+      </div><div class="row">
+        <div><b>فكرة ريل وستوري بورد</b><span>للفكرة</span></div>
+        <div class="pr"><small>يبدأ من</small><bdi>8$</bdi></div>
+      </div><div class="row">
+        <div><b>فيديو منتج بالـ AI</b><span><bdi>10–15</bdi> ثانية</span></div>
+        <div class="pr"><small>يبدأ من</small><bdi>12$</bdi></div>
+      </div><div class="row">
+        <div><b>لوغو وهوية مصغّرة</b><span>مرة وحدة</span></div>
+        <div class="pr"><small>يبدأ من</small><bdi>29$</bdi></div>
+      </div><div class="row">
+        <div><b>تحسين صور وتصاميم طباعة</b><span>للصورة · الطباعة من <bdi>5$</bdi></span></div>
+        <div class="pr"><small>يبدأ من</small><bdi>1$</bdi></div>
+      </div></div><p class="layer sub" style="right:60px; left:60px; top:1222px; font-size:21px; color:#94a3b8">أسعار تبدأ من، بالدولار الأميركي. السعر النهائي حسب عدد المنتجات والمقاسات والتعديلات.</p>
+       <p class="layer url" style="right:60px; top:1280px" dir="ltr">houseinmonzer<i>.vercel.app</i></p>
+       <p class="layer" style="left:60px; top:1272px; font-size:28px; font-weight:700; color:#22d3ee">للحجز راسلني ←</p></div></body></html>

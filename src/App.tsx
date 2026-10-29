@@ -10,6 +10,7 @@ import Skills from './components/Skills'
 import Experience from './components/Experience'
 import Projects from './components/Projects'
 import VisualWork from './components/VisualWork'
+import Pricing from './components/Pricing'
 import Education from './components/Education'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
@@ -67,6 +68,7 @@ export default function App() {
         <Experience />
         <Projects />
         <VisualWork />
+        <Pricing />
         <Education />
         <Contact />
       </main>

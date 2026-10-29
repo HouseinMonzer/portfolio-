@@ -186,6 +186,7 @@ export const navLinks = [
   { id: 'services', label: 'Services' },
   { id: 'projects', label: 'Web Work' },
   { id: 'visuals', label: 'Visuals' },
+  { id: 'pricing', label: 'Pricing' },
   { id: 'experience', label: 'Experience' },
   { id: 'contact', label: 'Contact' },
 ]
@@ -198,6 +199,7 @@ export const sectionLinks = [
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Web Work' },
   { id: 'visuals', label: 'Visual Work' },
+  { id: 'pricing', label: 'Pricing' },
   { id: 'education', label: 'Education' },
   { id: 'contact', label: 'Contact' },
 ]

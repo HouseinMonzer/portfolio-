@@ -1,0 +1,199 @@
+{
+  "currency": "$",
+  "note": "Starting prices in USD. The final quote depends on the number of products, formats and revisions.",
+  "noteAr": "أسعار تبدأ من، بالدولار الأميركي. السعر النهائي حسب عدد المنتجات والمقاسات والتعديلات.",
+  "visuals": [
+    {
+      "id": "product-photos",
+      "service": "product-photography",
+      "name": "Product photos",
+      "nameAr": "صور منتجات",
+      "price": 7,
+      "unit": "3 images",
+      "unitAr": "3 صور",
+      "includes": [
+        "White background, studio or lifestyle scene",
+        "Shape, colors, logos and labels kept faithful",
+        "2 rounds of revisions"
+      ],
+      "includesAr": [
+        "خلفية بيضاء، استوديو أو مشهد حياتي",
+        "الشكل والألوان واللوغو والملصقات متل المنتج",
+        "تعديلين"
+      ]
+    },
+    {
+      "id": "shopify-set",
+      "service": "ecommerce-visuals",
+      "name": "Shopify listing set",
+      "nameAr": "مجموعة صور للمتجر",
+      "price": 11,
+      "unit": "5 images per product",
+      "unitAr": "5 صور للمنتج",
+      "highlight": true,
+      "includes": [
+        "2 angles, features, details and lifestyle",
+        "Sized for your store, WebP on request",
+        "Consistent look across products"
+      ],
+      "includesAr": [
+        "زاويتين، مميزات، تفاصيل وصورة استخدام",
+        "بمقاسات متجرك، وWebP عند الطلب",
+        "نفس الستايل لكل المنتجات"
+      ]
+    },
+    {
+      "id": "social-post",
+      "service": "social-ads",
+      "name": "Social post or ad",
+      "nameAr": "بوست أو إعلان",
+      "price": 3,
+      "unit": "per design",
+      "unitAr": "للتصميم",
+      "includes": [
+        "1080×1350 or 1:1",
+        "Arabic or English text",
+        "Story version +$1"
+      ],
+      "includesAr": [
+        "1080×1350 أو 1:1",
+        "نص عربي أو إنجليزي",
+        "نسخة ستوري +1$"
+      ]
+    },
+    {
+      "id": "social-monthly",
+      "service": "social-ads",
+      "name": "Monthly social pack",
+      "nameAr": "باقة سوشال شهرية",
+      "price": 65,
+      "unit": "per month",
+      "unitAr": "بالشهر",
+      "includes": [
+        "12 posts and 8 Stories",
+        "One consistent brand look",
+        "Offers, bundles and announcements"
+      ],
+      "includesAr": [
+        "12 بوست و8 ستوري",
+        "هوية موحّدة",
+        "عروض، باقات وإعلانات"
+      ]
+    },
+    {
+      "id": "reel-concept",
+      "service": "video-reels",
+      "name": "Reel concept & storyboard",
+      "nameAr": "فكرة ريل وستوري بورد",
+      "price": 8,
+      "unit": "per concept",
+      "unitAr": "للفكرة",
+      "includes": [
+        "Script and scene breakdown",
+        "Camera moves and transitions",
+        "Ready-to-use generation prompts (JSON)"
+      ],
+      "includesAr": [
+        "سكريبت وتقسيم مشاهد",
+        "حركة كاميرا وانتقالات",
+        "برومبتات جاهزة (JSON)"
+      ]
+    },
+    {
+      "id": "ai-video",
+      "service": "video-reels",
+      "name": "AI product video",
+      "nameAr": "فيديو منتج بالـ AI",
+      "price": 12,
+      "unit": "10–15 seconds",
+      "unitAr": "10–15 ثانية",
+      "includes": [
+        "Product showcase or usage scene",
+        "9:16 for Reels and Stories",
+        "Voiceover script on request"
+      ],
+      "includesAr": [
+        "عرض منتج أو مشهد استخدام",
+        "9:16 للريلز والستوري",
+        "سكريبت صوتي عند الطلب"
+      ]
+    },
+    {
+      "id": "branding",
+      "service": "branding",
+      "name": "Logo & mini identity",
+      "nameAr": "لوغو وهوية مصغّرة",
+      "price": 29,
+      "unit": "one-time",
+      "unitAr": "مرة وحدة",
+      "includes": [
+        "Logo with 2 variations",
+        "Colors and fonts",
+        "3 social media templates"
+      ],
+      "includesAr": [
+        "لوغو مع نسختين",
+        "ألوان وخطوط",
+        "3 قوالب سوشال"
+      ]
+    },
+    {
+      "id": "enhance-print",
+      "service": "enhancement-print",
+      "name": "Photo enhancement & print",
+      "nameAr": "تحسين صور وتصاميم طباعة",
+      "price": 1,
+      "unit": "per image · print from $5",
+      "unitAr": "للصورة · الطباعة من 5$",
+      "includes": [
+        "Lighting, color and background fixes",
+        "Notebooks, bookmarks, invitations",
+        "Print-ready at the exact size"
+      ],
+      "includesAr": [
+        "إضاءة، ألوان وخلفية",
+        "دفاتر، فواصل، دعوات",
+        "جاهز للطباعة بالمقاس"
+      ]
+    }
+  ],
+  "web": [
+    {
+      "id": "landing-page",
+      "service": "business-site",
+      "name": "Landing page",
+      "price": 99,
+      "unit": "one page",
+      "includes": [
+        "Responsive, fast and SEO-ready",
+        "Contact form or WhatsApp button",
+        "Deployed on your domain"
+      ]
+    },
+    {
+      "id": "business-website",
+      "service": "business-site",
+      "name": "Business website",
+      "price": 199,
+      "unit": "up to 6 pages",
+      "highlight": true,
+      "includes": [
+        "React or WordPress",
+        "Arabic / English with RTL on request",
+        "1 month of support"
+      ]
+    },
+    {
+      "id": "web-app",
+      "service": "web-app",
+      "name": "Web app or online store",
+      "price": 499,
+      "unit": "custom scope",
+      "includes": [
+        "Accounts, dashboards and payments",
+        "React, TypeScript, Node.js, PostgreSQL",
+        "Quoted after a short call"
+      ]
+    }
+  ]
+}

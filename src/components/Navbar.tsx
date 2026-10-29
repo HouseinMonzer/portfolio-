@@ -73,7 +73,7 @@ export default function Navbar({ onOpenPalette }: { onOpenPalette: () => void })
             </span>
           </button>
 
-          <ul className="hidden items-center gap-1 rounded-full border border-white/5 bg-white/[0.03] p-1 md:flex">
+          <ul className="hidden items-center gap-1 rounded-full border border-white/5 bg-white/[0.03] p-1 lg:flex">
             {navLinks.map((l) => (
               <li key={l.id}>
                 <button
@@ -104,7 +104,7 @@ export default function Navbar({ onOpenPalette }: { onOpenPalette: () => void })
             </button>
             <button
               onClick={() => setOpen((o) => !o)}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white md:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white lg:hidden"
               aria-label={open ? 'Close menu' : 'Open menu'}
               aria-expanded={open}
             >
@@ -122,7 +122,7 @@ export default function Navbar({ onOpenPalette }: { onOpenPalette: () => void })
             animate={{ clipPath: 'circle(150% at 100% 0%)' }}
             exit={{ clipPath: 'circle(0% at 100% 0%)' }}
             transition={{ duration: 0.6, ease: EASE }}
-            className="fixed inset-0 z-40 flex flex-col justify-between bg-ink-900 px-6 pb-10 pt-28 md:hidden"
+            className="fixed inset-0 z-40 flex flex-col justify-between bg-ink-900 px-6 pb-10 pt-28 lg:hidden"
           >
             <ul className="space-y-2">
               {navLinks.map((l, i) => (

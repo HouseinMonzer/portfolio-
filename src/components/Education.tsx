@@ -10,7 +10,7 @@ export default function Education() {
   return (
     <section id="education" className="section">
       <div className="container-x">
-        <SectionHeading index="07" eyebrow="Education" title="Always" accent="learning." />
+        <SectionHeading index="08" eyebrow="Education" title="Always" accent="learning." />
 
         <div className="grid gap-4 lg:grid-cols-12">
           {/* Degree */}
