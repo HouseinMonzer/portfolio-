@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
-import { AlertCircle, ArrowUpRight, Check, Copy, Linkedin, Loader2, Mail, Phone, Send } from 'lucide-react'
+import { AlertCircle, ArrowUpRight, Check, Copy, Linkedin, Loader2, Mail, MessageCircle, Phone, Send } from 'lucide-react'
 import { contactSchema, fieldErrors, type FieldErrors } from '../../shared/contact'
 import { SERVICE_OPTIONS } from '../../shared/services'
 import { personal } from '../data/portfolio'
@@ -13,6 +13,7 @@ import { Reveal, SplitWords } from './ui/Reveal'
 type Status = 'idle' | 'loading' | 'success' | 'error'
 const empty = { name: '', email: '', service: '', subject: '', message: '', website: '' }
 const serviceGroups = [...new Set(SERVICE_OPTIONS.map((s) => s.group))]
+const whatsappUrl = `${personal.whatsapp}?text=${encodeURIComponent("Hi Housein, I found your website and I'd like to ask about a project.")}`
 
 export default function Contact() {
   const [form, setForm] = useState(empty)
@@ -88,7 +89,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="section overflow-hidden">
-      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-accent/[0.06] blur-[140px]" />
+      <div className="pointer-events-none absolute left-1/2 top-[calc(33.333%-140px)] h-[880px] w-[1180px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(34,211,238,0.06)_35%,transparent)]" />
       <div className="container-x relative">
         {/* grid-cols-1 (minmax(0,1fr)) on phones: an auto track would grow to the service <select>'s
             longest option and push the whole column past the screen edge. */}
@@ -112,6 +113,14 @@ export default function Contact() {
 
             <Reveal delay={0.3}>
               <div className="mt-8 space-y-3 sm:mt-10">
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="glass group flex w-full items-center gap-4 p-4 transition-colors hover:border-emerald-400/30">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-400/10 text-emerald-300"><MessageCircle size={18} /></span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-xs text-slate-500">WhatsApp, usually the fastest</span>
+                    <span className="text-sm text-white sm:text-base">{personal.phone}</span>
+                  </span>
+                  <ArrowUpRight size={14} className="text-slate-500 transition-colors group-hover:text-emerald-300" />
+                </a>
                 <button onClick={copyEmail} className="glass group flex w-full items-center gap-4 p-4 text-left transition-colors hover:border-accent/30" data-cursor="Copy">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent"><Mail size={18} /></span>
                   <span className="min-w-0 flex-1">
@@ -125,7 +134,7 @@ export default function Contact() {
                 <div className="grid grid-cols-2 gap-3">
                   <a href={`tel:${personal.phone.replace(/\s/g, '')}`} className="glass group flex items-center gap-3 p-4 transition-colors hover:border-accent/30">
                     <Phone size={16} className="text-accent" />
-                    <span className="text-sm text-slate-300 group-hover:text-white">Call / WhatsApp</span>
+                    <span className="text-sm text-slate-300 group-hover:text-white">Call</span>
                   </a>
                   <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className="glass group flex items-center gap-3 p-4 transition-colors hover:border-accent/30">
                     <Linkedin size={16} className="text-accent" />

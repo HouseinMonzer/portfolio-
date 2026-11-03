@@ -108,8 +108,9 @@ export default function Hero({ ready }: { ready: boolean }) {
     <section ref={ref} id="hero" className="relative flex min-h-[100svh] flex-col overflow-hidden">
       {/* Background layers */}
       <div className="grid-bg pointer-events-none absolute inset-0" />
-      <div className="pointer-events-none absolute -left-40 top-1/4 h-[480px] w-[480px] rounded-full bg-accent/10 blur-[120px]" />
-      <div className="pointer-events-none absolute -right-20 bottom-0 h-[420px] w-[420px] rounded-full bg-violet-500/10 blur-[120px]" />
+      {/* Soft glows as radial gradients: a large blur() filter costs Safari a lot every frame. */}
+      <div className="pointer-events-none absolute -left-[280px] top-[calc(25%-120px)] h-[720px] w-[720px] bg-[radial-gradient(closest-side,rgba(34,211,238,0.1)_35%,transparent)]" />
+      <div className="pointer-events-none absolute -bottom-[120px] -right-[200px] h-[660px] w-[660px] bg-[radial-gradient(closest-side,rgba(139,92,246,0.1)_35%,transparent)]" />
 
       {gl && wide && (
         <motion.div
@@ -224,7 +225,7 @@ export default function Hero({ ready }: { ready: boolean }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-slate-400 transition-colors hover:border-accent/50 hover:text-accent"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-slate-400 lg:h-9 lg:w-9 transition-colors hover:border-accent/50 hover:text-accent"
             >
               <Icon size={15} />
             </a>

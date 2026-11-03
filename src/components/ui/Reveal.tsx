@@ -4,12 +4,13 @@ import { EASE } from '../../lib/scroll'
 
 type Props = HTMLMotionProps<'div'> & { children: ReactNode; delay?: number; y?: number }
 
-/** Fades + lifts children into view once, as they enter the viewport. */
+/** Fades + lifts children into view once, as they enter the viewport.
+ *  No blur in the animation: animating `filter` on dozens of blocks makes Safari stutter. */
 export function Reveal({ children, delay = 0, y = 40, ...rest }: Props) {
   return (
     <motion.div
-      initial={{ opacity: 0, y, filter: 'blur(6px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.9, delay, ease: EASE }}
       {...rest}

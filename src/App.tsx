@@ -14,15 +14,16 @@ import Pricing from './components/Pricing'
 import Education from './components/Education'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
-import Preloader from './components/Preloader'
+import Preloader, { introSeen } from './components/Preloader'
 import Cursor from './components/Cursor'
 import ScrollProgress from './components/ScrollProgress'
 import CommandPalette from './components/CommandPalette'
 import { initSmoothScroll, scrollToId } from './lib/scroll'
 
 export default function App() {
-  const [ready, setReady] = useState(false)
-  const [loaderGone, setLoaderGone] = useState(false)
+  // The preloader plays once per session; later loads skip straight to the page.
+  const [ready, setReady] = useState(introSeen)
+  const [loaderGone, setLoaderGone] = useState(introSeen)
   const [palette, setPalette] = useState(false)
 
   useEffect(() => initSmoothScroll(), [])

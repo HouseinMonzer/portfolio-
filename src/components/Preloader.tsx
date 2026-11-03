@@ -3,6 +3,17 @@ import { useEffect, useState } from 'react'
 import { EASE, lockScroll, prefersReducedMotion } from '../lib/scroll'
 import { Logo } from './ui/Logo'
 
+const INTRO_KEY = 'hm-intro'
+
+/** True once the intro has played in this browser session, so reloads go straight to the page. */
+export function introSeen(): boolean {
+  try {
+    return sessionStorage.getItem(INTRO_KEY) === '1'
+  } catch {
+    return false
+  }
+}
+
 /** Short branded intro: counts to 100 then lifts like a curtain. */
 export default function Preloader({ onDone }: { onDone: () => void }) {
   const [count, setCount] = useState(0)
@@ -12,10 +23,15 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
     lockScroll(true)
     const quick = prefersReducedMotion()
     const controls = animate(0, 100, {
-      duration: quick ? 0.2 : 1.5,
+      duration: quick ? 0.2 : 0.9,
       ease: [0.65, 0, 0.35, 1],
       onUpdate: (v) => setCount(Math.round(v)),
       onComplete: () => {
+        try {
+          sessionStorage.setItem(INTRO_KEY, '1')
+        } catch {
+          /* storage blocked: the intro just plays again next time */
+        }
         setLeaving(true)
         lockScroll(false)
         onDone()
@@ -33,7 +49,7 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
       className="fixed inset-0 z-[100] flex flex-col justify-between bg-ink-950 p-6 sm:p-10"
       initial={{ y: 0 }}
       animate={leaving ? { y: '-100%' } : { y: 0 }}
-      transition={{ duration: 1, ease: EASE, delay: 0.1 }}
+      transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
       style={{ pointerEvents: leaving ? 'none' : 'auto' }}
       aria-hidden
     >

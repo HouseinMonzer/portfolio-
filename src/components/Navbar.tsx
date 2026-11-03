@@ -104,7 +104,7 @@ export default function Navbar({ onOpenPalette }: { onOpenPalette: () => void })
             </button>
             <button
               onClick={() => setOpen((o) => !o)}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white lg:hidden"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-white lg:hidden"
               aria-label={open ? 'Close menu' : 'Open menu'}
               aria-expanded={open}
             >

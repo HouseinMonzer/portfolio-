@@ -5,6 +5,7 @@ export const personal = {
   location: 'Lebanon',
   email: 'houseinmonzer@proton.me',
   phone: '+961 81 960 352',
+  whatsapp: 'https://wa.me/96181960352',
   linkedin: 'https://www.linkedin.com/in/housein-monzer-4b5a7a246/',
   github: 'https://github.com/HouseinMonzer',
   cv: '/Housein_Monzer_CV.pdf',

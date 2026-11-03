@@ -42,10 +42,10 @@ export default function Footer() {
           </nav>
           <div className="md:col-span-3">
             <p className="mb-4 font-mono text-[11px] uppercase tracking-widest text-slate-600">Connect</p>
-            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm md:flex-col">
-              <li><a href={personal.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-slate-400 hover:text-white"><Github size={14} /> GitHub</a></li>
-              <li><a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-slate-400 hover:text-white"><Linkedin size={14} /> LinkedIn</a></li>
-              <li><a href={`mailto:${personal.email}`} className="inline-flex items-center gap-2 text-slate-400 hover:text-white"><Mail size={14} /> Email</a></li>
+            <ul className="flex flex-wrap gap-x-6 text-sm md:flex-col md:gap-2">
+              <li><a href={personal.github} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-slate-400 hover:text-white md:min-h-0"><Github size={14} /> GitHub</a></li>
+              <li><a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-slate-400 hover:text-white md:min-h-0"><Linkedin size={14} /> LinkedIn</a></li>
+              <li><a href={`mailto:${personal.email}`} className="inline-flex min-h-11 items-center gap-2 text-slate-400 hover:text-white md:min-h-0"><Mail size={14} /> Email</a></li>
             </ul>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function Footer() {
             )}
             <span className="font-mono">Beirut {time}</span>
             <Magnetic>
-              <button onClick={() => scrollToId('top')} aria-label="Back to top" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-slate-300 transition-colors hover:border-accent hover:bg-accent hover:text-ink-950">
+              <button onClick={() => scrollToId('top')} aria-label="Back to top" className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-slate-300 transition-colors hover:border-accent hover:bg-accent hover:text-ink-950">
                 <ArrowUp size={16} />
               </button>
             </Magnetic>

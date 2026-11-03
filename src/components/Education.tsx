@@ -17,7 +17,7 @@ export default function Education() {
           {education.map((edu) => (
             <Reveal key={edu.degree} className="lg:col-span-7">
               <TiltCard max={4} className="flex h-full flex-col justify-between gap-10 overflow-hidden p-8">
-                <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
+                <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 bg-[radial-gradient(closest-side,rgba(34,211,238,0.1)_35%,transparent)]" />
                 <div className="flex items-center justify-between">
                   <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-accent/20 bg-accent/10 text-accent">
                     <GraduationCap size={22} />
