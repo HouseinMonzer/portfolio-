@@ -90,7 +90,9 @@ export default function Contact() {
     <section id="contact" className="section overflow-hidden">
       <div className="pointer-events-none absolute left-1/2 top-1/3 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-accent/[0.06] blur-[140px]" />
       <div className="container-x relative">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+        {/* grid-cols-1 (minmax(0,1fr)) on phones: an auto track would grow to the service <select>'s
+            longest option and push the whole column past the screen edge. */}
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           {/* Pitch */}
           <div className="lg:col-span-5">
             <Reveal y={16}>
@@ -112,9 +114,9 @@ export default function Contact() {
               <div className="mt-8 space-y-3 sm:mt-10">
                 <button onClick={copyEmail} className="glass group flex w-full items-center gap-4 p-4 text-left transition-colors hover:border-accent/30" data-cursor="Copy">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent"><Mail size={18} /></span>
-                  <span className="flex-1">
+                  <span className="min-w-0 flex-1">
                     <span className="block text-xs text-slate-500">Email</span>
-                    <span className="text-sm text-white sm:text-base">{personal.email}</span>
+                    <span className="break-all text-sm text-white sm:text-base">{personal.email}</span>
                   </span>
                   <span className="flex items-center gap-1.5 text-xs text-slate-500 transition-colors group-hover:text-accent">
                     {copied ? <><Check size={14} /> Copied</> : <><Copy size={14} /> Copy</>}
@@ -170,7 +172,7 @@ export default function Contact() {
                       </label>
                     </div>
 
-                    <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
                       <Field id="name" label="Your name" error={err('name')}>
                         <input id="name" className="field" autoComplete="name" placeholder="Jane Doe" value={form.name} onChange={(e) => update('name', e.target.value)} onBlur={() => blur('name')} aria-invalid={!!err('name')} aria-describedby={err('name') ? 'name-error' : undefined} />
                       </Field>
