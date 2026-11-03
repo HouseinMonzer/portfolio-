@@ -31,7 +31,7 @@ export default function About() {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(34,211,238,0.18),transparent_60%)]" />
               <div className="absolute inset-x-10 bottom-16 top-10 rounded-full border border-white/5" style={{ transform: 'translateZ(20px)' }} />
               <img
-                src="/avatar.png"
+                src="/avatar.webp"
                 alt="3D illustration of Housein Monzer coding at his desk"
                 width={399}
                 height={600}

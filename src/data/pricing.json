@@ -162,37 +162,58 @@
       "id": "landing-page",
       "service": "business-site",
       "name": "Landing page",
+      "nameAr": "صفحة هبوط",
       "price": 99,
       "unit": "one page",
+      "unitAr": "صفحة وحدة",
       "includes": [
         "Responsive, fast and SEO-ready",
         "Contact form or WhatsApp button",
         "Deployed on your domain"
+      ],
+      "includesAr": [
+        "سريعة، متجاوبة وجاهزة للـ SEO",
+        "فورم تواصل أو زر واتساب",
+        "منشورة عالدومين تبعك"
       ]
     },
     {
       "id": "business-website",
       "service": "business-site",
       "name": "Business website",
+      "nameAr": "موقع لشغلك",
       "price": 199,
       "unit": "up to 6 pages",
+      "unitAr": "لحد 6 صفحات",
       "highlight": true,
       "includes": [
         "React or WordPress",
         "Arabic / English with RTL on request",
         "1 month of support"
+      ],
+      "includesAr": [
+        "React أو WordPress",
+        "عربي / إنجليزي عند الطلب",
+        "شهر دعم"
       ]
     },
     {
       "id": "web-app",
       "service": "web-app",
       "name": "Web app or online store",
+      "nameAr": "تطبيق ويب أو متجر إلكتروني",
       "price": 499,
       "unit": "custom scope",
+      "unitAr": "حسب المشروع",
       "includes": [
         "Accounts, dashboards and payments",
         "React, TypeScript, Node.js, PostgreSQL",
         "Quoted after a short call"
+      ],
+      "includesAr": [
+        "حسابات، لوحات تحكم ودفع",
+        "React، TypeScript، Node.js، PostgreSQL",
+        "السعر بعد مكالمة قصيرة"
       ]
     }
   ]

@@ -11,6 +11,10 @@ export type Package = {
   unit: string
   includes: string[]
   highlight?: boolean
+  // Arabic copy for the Pricing section's عربي toggle (and the Arabic price-list images).
+  nameAr?: string
+  unitAr?: string
+  includesAr?: string[]
 }
 
 // Drop any package whose service id isn't a real service, so a typo can't break the contact form.
@@ -19,5 +23,6 @@ const valid = (list: (Omit<Package, 'service'> & { service: string })[]) =>
 
 export const currency = raw.currency
 export const pricingNote = raw.note
+export const pricingNoteAr = raw.noteAr
 export const visualPackages = valid(raw.visuals)
 export const webPackages = valid(raw.web)

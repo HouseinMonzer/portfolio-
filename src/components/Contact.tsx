@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
-import { AlertCircle, ArrowUpRight, Check, Copy, Linkedin, Loader2, Mail, MessageCircle, Phone, Send } from 'lucide-react'
+import { AlertCircle, ArrowUpRight, Check, Copy, Linkedin, Loader2, Mail, Phone, Send } from 'lucide-react'
 import { contactSchema, fieldErrors, type FieldErrors } from '../../shared/contact'
 import { SERVICE_OPTIONS } from '../../shared/services'
 import { personal } from '../data/portfolio'
@@ -9,6 +9,7 @@ import { onDiscussProject } from '../lib/contactIntent'
 import { EASE } from '../lib/scroll'
 import { Magnetic } from './ui/Magnetic'
 import { Reveal, SplitWords } from './ui/Reveal'
+import { WhatsAppIcon } from './ui/WhatsAppIcon'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 const empty = { name: '', email: '', service: '', subject: '', message: '', website: '' }
@@ -113,13 +114,13 @@ export default function Contact() {
 
             <Reveal delay={0.3}>
               <div className="mt-8 space-y-3 sm:mt-10">
-                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="glass group flex w-full items-center gap-4 p-4 transition-colors hover:border-emerald-400/30">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-400/10 text-emerald-300"><MessageCircle size={18} /></span>
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="glass group flex w-full items-center gap-4 p-4 transition-colors hover:border-[#25D366]/40">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#25D366]/10 text-[#25D366]"><WhatsAppIcon size={22} /></span>
                   <span className="min-w-0 flex-1">
                     <span className="block text-xs text-slate-500">WhatsApp, usually the fastest</span>
                     <span className="text-sm text-white sm:text-base">{personal.phone}</span>
                   </span>
-                  <ArrowUpRight size={14} className="text-slate-500 transition-colors group-hover:text-emerald-300" />
+                  <ArrowUpRight size={14} className="text-slate-500 transition-colors group-hover:text-[#25D366]" />
                 </a>
                 <button onClick={copyEmail} className="glass group flex w-full items-center gap-4 p-4 text-left transition-colors hover:border-accent/30" data-cursor="Copy">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent"><Mail size={18} /></span>

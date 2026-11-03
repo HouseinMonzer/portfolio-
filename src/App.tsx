@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import { MotionConfig } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
@@ -75,6 +76,7 @@ export default function App() {
       </main>
       <Footer />
       <Analytics />
+      <SpeedInsights />
     </MotionConfig>
   )
 }
