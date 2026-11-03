@@ -17,10 +17,12 @@ export default function Footer() {
   }, [])
 
   return (
-    <footer className="relative overflow-hidden border-t border-white/5 pt-20">
+    <footer className="relative overflow-hidden border-t border-white/5 pt-12 md:pt-20">
       <div className="container-x">
-        <div className="grid gap-12 pb-16 md:grid-cols-12">
-          <div className="md:col-span-6">
+        {/* On phones the contact form is right above and the navbar menu covers navigation,
+            so only the Connect links are kept here. */}
+        <div className="grid gap-12 pb-10 md:grid-cols-12 md:pb-16">
+          <div className="hidden md:col-span-6 md:block">
             <p className="font-display text-3xl font-medium leading-tight text-white sm:text-4xl">
               Have an idea? <br />
               <button onClick={() => scrollToId('contact')} className="text-gradient underline decoration-accent/30 underline-offset-8 transition-colors hover:decoration-accent">
@@ -28,7 +30,7 @@ export default function Footer() {
               </button>
             </p>
           </div>
-          <nav aria-label="Footer" className="md:col-span-3">
+          <nav aria-label="Footer" className="hidden md:col-span-3 md:block">
             <p className="mb-4 font-mono text-[11px] uppercase tracking-widest text-slate-600">Menu</p>
             <ul className="space-y-2">
               {navLinks.map((l) => (
@@ -40,7 +42,7 @@ export default function Footer() {
           </nav>
           <div className="md:col-span-3">
             <p className="mb-4 font-mono text-[11px] uppercase tracking-widest text-slate-600">Connect</p>
-            <ul className="space-y-2 text-sm">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm md:flex-col">
               <li><a href={personal.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-slate-400 hover:text-white"><Github size={14} /> GitHub</a></li>
               <li><a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-slate-400 hover:text-white"><Linkedin size={14} /> LinkedIn</a></li>
               <li><a href={`mailto:${personal.email}`} className="inline-flex items-center gap-2 text-slate-400 hover:text-white"><Mail size={14} /> Email</a></li>

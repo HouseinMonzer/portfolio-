@@ -73,9 +73,6 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
-
-      {/* Film-grain overlay for depth */}
-      <div aria-hidden className="noise pointer-events-none fixed inset-0 z-[70] opacity-[0.035] mix-blend-overlay" />
       <Analytics />
     </MotionConfig>
   )

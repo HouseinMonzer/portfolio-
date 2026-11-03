@@ -60,8 +60,8 @@ export default function TechSphere({ tags }: { tags: string[] }) {
         const depth = (z2 + 1) / 2 // 0 back → 1 front
         node.style.transform = `translate(-50%, -50%) translate3d(${x2 * radius}px, ${y1 * radius}px, 0) scale(${0.6 + depth * 0.6})`
         node.style.opacity = String(0.15 + depth * 0.85)
+        // No per-frame blur on the back tags: re-filtering moving elements every frame stutters in Safari.
         node.style.zIndex = String(Math.round(depth * 100))
-        node.style.filter = depth < 0.35 ? 'blur(1px)' : 'none'
       })
       if (visible && !reduce) raf = requestAnimationFrame(render)
     }
@@ -93,7 +93,7 @@ export default function TechSphere({ tags }: { tags: string[] }) {
           <span
             key={t}
             ref={(n) => (nodes.current[i] = n)}
-            className="absolute left-0 top-0 whitespace-nowrap rounded-full border border-white/10 bg-ink-800/80 px-3 py-1 font-mono text-xs text-slate-200 backdrop-blur-sm will-change-transform"
+            className="absolute left-0 top-0 whitespace-nowrap rounded-full border border-white/10 bg-ink-800/90 px-3 py-1 font-mono text-xs text-slate-200 will-change-transform"
           >
             {t}
           </span>

@@ -90,26 +90,26 @@ export default function Contact() {
     <section id="contact" className="section overflow-hidden">
       <div className="pointer-events-none absolute left-1/2 top-1/3 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-accent/[0.06] blur-[140px]" />
       <div className="container-x relative">
-        <div className="grid gap-16 lg:grid-cols-12">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           {/* Pitch */}
           <div className="lg:col-span-5">
             <Reveal y={16}>
               <p className="eyebrow mb-6"><span className="text-slate-500">09</span><span className="h-px w-10 bg-accent/50" />Contact</p>
             </Reveal>
-            <h2 className="font-display text-5xl font-semibold leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
+            <h2 className="font-display text-4xl font-semibold leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
               <SplitWords text="Let's make" />
               <br />
               <SplitWords text="something great." className="text-gradient" delay={0.15} />
             </h2>
             <Reveal delay={0.2}>
-              <p className="mt-8 max-w-md text-lg leading-relaxed text-slate-400">
+              <p className="mt-6 max-w-md text-base leading-relaxed text-slate-400 sm:mt-8 sm:text-lg">
                 Need a website, product visuals for your store, a campaign for social media, or have a role to fill? Tell
                 me about it. I usually reply within 24 hours.
               </p>
             </Reveal>
 
             <Reveal delay={0.3}>
-              <div className="mt-10 space-y-3">
+              <div className="mt-8 space-y-3 sm:mt-10">
                 <button onClick={copyEmail} className="glass group flex w-full items-center gap-4 p-4 text-left transition-colors hover:border-accent/30" data-cursor="Copy">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent"><Mail size={18} /></span>
                   <span className="flex-1">
@@ -137,7 +137,7 @@ export default function Contact() {
 
           {/* Form */}
           <Reveal delay={0.15} className="lg:col-span-7">
-            <div className="glass relative overflow-hidden p-6 sm:p-10">
+            <div className="glass relative overflow-hidden p-5 sm:p-10">
               <AnimatePresence mode="wait">
                 {status === 'success' ? (
                   <motion.div
@@ -162,7 +162,7 @@ export default function Contact() {
                     <button onClick={() => setStatus('idle')} className="btn-ghost mt-8">Send another message</button>
                   </motion.div>
                 ) : (
-                  <motion.form key="form" onSubmit={onSubmit} noValidate exit={{ opacity: 0 }} className="space-y-5">
+                  <motion.form key="form" onSubmit={onSubmit} noValidate exit={{ opacity: 0 }} className="space-y-4 sm:space-y-5">
                     {/* Honeypot */}
                     <div className="absolute -left-[9999px]" aria-hidden>
                       <label>
@@ -170,7 +170,7 @@ export default function Contact() {
                       </label>
                     </div>
 
-                    <div className="grid gap-5 sm:grid-cols-2">
+                    <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
                       <Field id="name" label="Your name" error={err('name')}>
                         <input id="name" className="field" autoComplete="name" placeholder="Jane Doe" value={form.name} onChange={(e) => update('name', e.target.value)} onBlur={() => blur('name')} aria-invalid={!!err('name')} aria-describedby={err('name') ? 'name-error' : undefined} />
                       </Field>
@@ -195,7 +195,7 @@ export default function Contact() {
                     </Field>
 
                     <Field id="message" label="Project details" error={err('message')} hint={form.message ? `${remaining} left` : undefined}>
-                      <textarea id="message" ref={messageRef} rows={6} className="field resize-none" placeholder="What you need, for which product or brand, sizes or platforms, timeline and budget…" value={form.message} onChange={(e) => update('message', e.target.value)} onBlur={() => blur('message')} maxLength={4000} aria-invalid={!!err('message')} aria-describedby={err('message') ? 'message-error' : undefined} data-lenis-prevent />
+                      <textarea id="message" ref={messageRef} rows={4} className="field resize-none sm:min-h-[9.5rem]" placeholder="What you need, for which product or brand, sizes or platforms, timeline and budget…" value={form.message} onChange={(e) => update('message', e.target.value)} onBlur={() => blur('message')} maxLength={4000} aria-invalid={!!err('message')} aria-describedby={err('message') ? 'message-error' : undefined} data-lenis-prevent />
                     </Field>
 
                     <div role="alert" aria-live="assertive">

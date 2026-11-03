@@ -74,9 +74,10 @@
     background-size: 200% auto;
   }
 
-  /* Glass card with a mouse-following spotlight (set --mx/--my on hover). */
+  /* Glass card with a mouse-following spotlight (set --mx/--my on hover).
+     The blur is desktop-only: dozens of blurred cards make mobile Safari stutter while scrolling. */
   .glass {
-    @apply relative rounded-3xl border border-white/[0.07] bg-white/[0.025] shadow-card backdrop-blur-xl;
+    @apply relative rounded-3xl border border-white/[0.07] bg-white/[0.025] shadow-card lg:backdrop-blur-xl;
   }
   .spotlight::before {
     content: '';
@@ -121,12 +122,9 @@
     @apply btn border border-white/15 text-white hover:border-accent/60 hover:text-accent;
   }
 
+  /* 16px on phones: iOS Safari zooms the page into any field smaller than that. */
   .field {
-    @apply w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white placeholder-slate-500 outline-none transition-[border-color,box-shadow,background-color] duration-300 focus:border-accent/60 focus:bg-white/[0.05] focus:shadow-[0_0_0_4px_rgba(34,211,238,0.1)];
-  }
-
-  .noise {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+    @apply w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3.5 text-base text-white sm:text-sm placeholder-slate-500 outline-none transition-[border-color,box-shadow,background-color] duration-300 focus:border-accent/60 focus:bg-white/[0.05] focus:shadow-[0_0_0_4px_rgba(34,211,238,0.1)];
   }
 
   .grid-bg {

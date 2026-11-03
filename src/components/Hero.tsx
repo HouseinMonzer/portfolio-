@@ -67,6 +67,7 @@ export default function Hero({ ready }: { ready: boolean }) {
   const reduce = useReducedMotion()
   const time = useLocalTime('Asia/Beirut')
   const [gl, setGl] = useState(false)
+  const [wide, setWide] = useState(false)
   const [visible, setVisible] = useState(true)
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
@@ -74,6 +75,17 @@ export default function Hero({ ready }: { ready: boolean }) {
   const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
 
   useEffect(() => setGl(webglAvailable()), [])
+
+  // The 3D scene and the scroll parallax are desktop-only. On phones the hero text fills the screen,
+  // so the parallax pushed it into the next section, and the WebGL swarm sat behind the name and
+  // cost Safari a lot of battery and frame time.
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)')
+    const sync = () => setWide(mq.matches)
+    sync()
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
+  }, [])
 
   // Pause the WebGL render loop while the hero is off-screen.
   useEffect(() => {
@@ -93,13 +105,13 @@ export default function Hero({ ready }: { ready: boolean }) {
   const [first, last] = personal.name.split(' ')
 
   return (
-    <section ref={ref} id="hero" className="relative flex min-h-[100svh] items-center overflow-hidden">
+    <section ref={ref} id="hero" className="relative flex min-h-[100svh] flex-col overflow-hidden">
       {/* Background layers */}
       <div className="grid-bg pointer-events-none absolute inset-0" />
       <div className="pointer-events-none absolute -left-40 top-1/4 h-[480px] w-[480px] rounded-full bg-accent/10 blur-[120px]" />
       <div className="pointer-events-none absolute -right-20 bottom-0 h-[420px] w-[420px] rounded-full bg-violet-500/10 blur-[120px]" />
 
-      {gl && (
+      {gl && wide && (
         <motion.div
           className="absolute inset-0"
           initial={{ opacity: 0, scale: 1.1 }}
@@ -114,10 +126,13 @@ export default function Hero({ ready }: { ready: boolean }) {
           </ErrorBoundary>
         </motion.div>
       )}
-      {/* Legibility scrim over the 3D on small screens */}
+      {/* Legibility scrim over the 3D; on small screens it fades the hero into the page */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink-950/30 via-ink-950/40 to-ink-950 lg:bg-gradient-to-r lg:from-ink-950/80 lg:via-ink-950/20 lg:to-transparent" />
 
-      <motion.div style={{ y: contentY, opacity: contentOpacity }} className="container-x relative z-10 pb-24 pt-32">
+      <motion.div
+        style={wide ? { y: contentY, opacity: contentOpacity } : undefined}
+        className="container-x relative z-10 my-auto pb-10 pt-28 lg:pb-24 lg:pt-32"
+      >
         <motion.div
           {...fadeUp(0.1)}
           className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-emerald-400/20 bg-emerald-400/[0.06] py-1.5 pl-2 pr-4 text-xs text-emerald-300 backdrop-blur"
@@ -173,12 +188,12 @@ export default function Hero({ ready }: { ready: boolean }) {
         </motion.div>
       </motion.div>
 
-      {/* Bottom meta bar */}
+      {/* Bottom meta bar: in the flow on phones so it can never sit on top of the buttons */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: ready ? 1 : 0 }}
         transition={{ duration: 1, delay: 1.5 }}
-        className="container-x absolute inset-x-0 bottom-6 z-10 flex items-end justify-between gap-6 text-xs text-slate-500"
+        className="container-x relative z-10 flex items-end justify-between gap-6 pb-6 text-xs text-slate-500 lg:absolute lg:inset-x-0 lg:bottom-6 lg:pb-0"
       >
         <div className="flex items-center gap-5">
           <span className="inline-flex items-center gap-1.5">
